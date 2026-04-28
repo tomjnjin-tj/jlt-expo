@@ -1,89 +1,1063 @@
-JLT Expo Tool
-EN
-中文
-ES
-DE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>JLT Expo Tool</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --navy:#0D1B3E;--navy2:#1E3A5F;--gold:#F9A825;
+  --hot:#E65100;--hot-bg:#FFF3E0;
+  --warm:#F57F17;--warm-bg:#FFFDE7;
+  --cold:#1565C0;--cold-bg:#E3F2FD;
+  --green:#1B5E20;--green-bg:#E8F5E9;
+  --purple:#4C1D95;--purple-bg:#EDE9FE;
+  --bg:#F0F3F8;--card:#fff;--border:#DDE3EE;
+  --text:#111827;--muted:#64748B;--radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;background:var(--bg)}
+body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;overscroll-behavior:none}
 
-⚡ Capture
-📋 Log
-📦 Resources
-✅ Checklist
-📊 Summary
-0
-Total
-0
-🔥 Hot
-0
-☀️ Warm
-0
-❄️ Cold
+/* ── HEADER ── */
+.hdr{background:var(--navy);padding:10px 14px 0;position:sticky;top:0;z-index:100}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.hdr-logo{font-size:15px;font-weight:700;color:#fff}
+.hdr-logo span{color:var(--gold)}
+.lang-row{display:flex;gap:4px}
+.lang-btn{background:rgba(255,255,255,.12);border:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:600;padding:4px 8px;border-radius:14px;cursor:pointer;font-family:inherit;transition:.12s}
+.lang-btn.active{background:var(--gold);color:var(--navy)}
+.hdr-expo{background:rgba(255,255,255,.09);border-radius:8px;padding:6px 10px;display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.expo-input{background:none;border:none;outline:none;color:#fff;font-family:inherit;font-size:13px;font-weight:600;flex:1;min-width:0}
+.expo-input::placeholder{color:rgba(255,255,255,.35)}
+.expo-date{background:none;border:none;outline:none;color:rgba(255,255,255,.55);font-family:inherit;font-size:12px;color-scheme:dark;width:110px;text-align:right}
+
+/* ── TAB BAR ── */
+.tab-bar{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.55);font-family:inherit;font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:18px;cursor:pointer;transition:.12s;letter-spacing:.02em}
+.tab.active{background:var(--gold);color:var(--navy)}
+
+/* ── VIEWS ── */
+.view{display:none;padding:12px 14px 100px;max-width:560px;margin:0 auto}
+.view.active{display:block}
+.slabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:16px 0 8px;padding-left:2px}
+.slabel:first-child{margin-top:4px}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:0 2px 12px rgba(13,27,62,.09);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.card-hdr{background:var(--navy);padding:9px 13px;display:flex;align-items:center;justify-content:space-between}
+.card-hdr-title{color:#fff;font-size:13px;font-weight:700}
+.card-hdr-badge{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.card-body{padding:11px 13px}
+
+/* ── COUNTERS ── */
+.counter-strip{display:flex;gap:7px;margin-bottom:10px}
+.cpill{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.cnum{font-size:21px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
+.clbl{font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* ── FORM INPUTS ── */
+.fgroup{margin-bottom:10px}
+.flabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;display:block}
+.finput{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:.15s;resize:none}
+.finput:focus{border-color:var(--navy);background:#fff}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* ── COMPANY BIG INPUT (capture mode) ── */
+.company-wrap{padding:13px 14px 10px;border-bottom:1px solid var(--border)}
+.company-big{width:100%;border:none;outline:none;font-family:inherit;font-size:20px;font-weight:700;color:var(--navy);background:none;line-height:1.2}
+.company-big::placeholder{color:#C5CDD8;font-weight:400}
+.contact-mini-row{display:flex;gap:6px;margin-top:8px}
+.mini-inp{flex:1;border:none;border-bottom:1.5px solid var(--border);outline:none;font-family:inherit;font-size:13px;color:var(--text);background:none;padding:4px 2px;min-width:0}
+.mini-inp::placeholder{color:#B0BEC5}
+.mini-inp:focus{border-color:var(--navy)}
+
+/* ── TEMPERATURE ── */
+.temp-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.temp-btn{border:none;background:none;padding:13px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:inherit;font-size:10.5px;font-weight:600;color:var(--muted);transition:.12s;border-right:1px solid var(--border);line-height:1}
+.temp-btn:last-child{border-right:none}
+.temp-btn .emo{font-size:21px;line-height:1;display:block}
+.temp-btn.sel-hot{background:var(--hot-bg);color:var(--hot)}
+.temp-btn.sel-warm{background:var(--warm-bg);color:var(--warm)}
+.temp-btn.sel-cold{background:var(--cold-bg);color:var(--cold)}
+.temp-btn.sel-browse{background:#F3F4F6;color:#374151}
+
+/* ── TAGS / PILLS ── */
+.tags-sec{padding:10px 13px 10px;border-bottom:1px solid var(--border)}
+.tags-sec:last-of-type{border-bottom:none}
+.tlabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.tgrid{display:flex;flex-wrap:wrap;gap:5px}
+.ptag{background:var(--bg);border:1.5px solid var(--border);border-radius:18px;padding:5px 11px;font-size:12px;font-weight:500;cursor:pointer;transition:.1s;user-select:none;white-space:nowrap}
+.ptag.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ptag.gold.sel{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+
+/* ── RATING BUTTONS (full form) ── */
+.rating-row{display:flex;gap:6px;margin-top:4px}
+.rtn{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 4px;font-size:17px;cursor:pointer;text-align:center;transition:.15s;line-height:1;font-family:inherit}
+.rtn.sel{border-color:var(--navy);background:var(--navy)}
+
+/* ── VOICE SECTION ── */
+.voice-sec{padding:11px 13px 13px;border-bottom:1px solid var(--border)}
+.vtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.vlabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.free-badge{background:var(--green-bg);color:var(--green);font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;border:1px solid #A5D6A7}
+.vlang-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
+.vchip{background:var(--bg);border:1.5px solid var(--border);border-radius:11px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap}
+.vchip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mic-row{display:flex;align-items:center;gap:13px;margin-bottom:9px}
+.mic-btn{width:62px;height:62px;border-radius:50%;border:none;background:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:25px;transition:.2s;flex-shrink:0;box-shadow:0 4px 16px rgba(13,27,62,.22)}
+.mic-btn.rec{background:#EF4444;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.55)}70%{box-shadow:0 0 0 13px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.mic-info{flex:1;min-width:0}
+.mic-status{font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}
+.mic-status.rec{color:#EF4444}
+.mic-hint{font-size:11px;color:var(--muted);margin-top:2px;opacity:.7}
+.transcript{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-family:inherit;font-size:14px;color:var(--text);outline:none;resize:none;line-height:1.6;min-height:64px;transition:.15s}
+.transcript:focus{border-color:var(--navy);background:#fff}
+.pchips{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;margin:7px 0 8px}
+.pchips::-webkit-scrollbar{display:none}
+.pchip{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:11px;padding:5px 9px;font-size:11px;color:#3730A3;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.pchip:active{background:#C7D2FE}
+.ai-row{display:flex;gap:6px}
+.aibtn{flex:1;padding:9px 5px;border:none;border-radius:9px;font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:.15s}
+.aibtn:active{transform:scale(.97)}
+.aibtn-sum{background:#EDE9FE;color:#4C1D95}
+.aibtn-zh{background:#E0F2FE;color:#0369A1}
+.aibtn-en{background:var(--green-bg);color:var(--green)}
+.aibtn-clr{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)}
+.ai-result{background:linear-gradient(135deg,#EDE9FE,#E0F2FE);border:1px solid #C4B5FD;border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;line-height:1.6;color:#1E1B4B;display:none}
+.ai-rlbl{font-size:10px;font-weight:700;color:#4C1D95;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-right:4px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.voice-unsupported{background:var(--hot-bg);border:1px solid #FFCC80;border-radius:9px;padding:9px 12px;font-size:13px;color:var(--hot);margin-bottom:8px;display:none}
+
+/* ── SAVE / ACTION BUTTONS ── */
+.save-wrap{padding:10px 13px}
+.save-btn{width:100%;padding:15px;background:var(--navy);color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.save-btn:active{transform:scale(.98)}
+.save-btn.ok{background:#1B5E20}
+.btn{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-outline{background:none;color:var(--navy);border:2px solid var(--navy)}
+.btn-red{background:#B71C1C;color:#fff}
+
+/* ── LOG ── */
+.log-filters{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto;scrollbar-width:none}
+.log-filters::-webkit-scrollbar{display:none}
+.fbtn{flex-shrink:0;background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:.12s}
+.fbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.vcard{background:var(--card);border-radius:12px;padding:12px 13px;margin-bottom:8px;border:1px solid var(--border);box-shadow:0 1px 5px rgba(0,0,0,.06);position:relative;animation:up .18s ease}
+@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.vc-co{font-size:15px;font-weight:700;color:var(--navy)}
+.vc-ct{font-size:12px;color:var(--muted);margin-top:1px}
+.vc-time{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;flex-shrink:0}
+.vc-top{display:flex;justify-content:space-between;margin-bottom:5px}
+.vc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.vtag{padding:3px 8px;border-radius:7px;font-size:11px;font-weight:600}
+.vt-hot{background:var(--hot-bg);color:var(--hot)}
+.vt-warm{background:var(--warm-bg);color:var(--warm)}
+.vt-cold{background:var(--cold-bg);color:var(--cold)}
+.vt-browse{background:#F3F4F6;color:#374151}
+.vt-prod{background:#EEF2FF;color:#3730A3}
+.vt-next{background:var(--green-bg);color:var(--green);font-weight:600}
+.vt-reg{background:#FFF9C4;color:#795548}
+.vt-mat{background:#FCE4EC;color:#880E4F}
+.vc-note{font-size:13px;color:var(--text);line-height:1.5;margin-top:6px;background:var(--bg);border-radius:8px;padding:7px 9px}
+.vc-ai{font-size:13px;line-height:1.5;margin-top:5px;background:#EDE9FE;border-radius:8px;padding:7px 9px;color:#1E1B4B;border:1px solid #DDD6FE}
+.vc-ai-lbl{font-size:10px;font-weight:700;color:#4C1D95;margin-bottom:3px;letter-spacing:.08em;text-transform:uppercase}
+.vc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1;border-radius:5px}
+.vc-del:active{color:#B71C1C;background:#FFEBEE}
+.vc-actions{display:flex;gap:5px;margin-top:7px}
+.vc-act{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:6px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;text-align:center;font-family:inherit}
+.vc-act.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.vc-noteinput{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:13px;font-family:inherit;outline:none;background:var(--bg)}
+.vc-noteinput:focus{border-color:var(--navy);background:#fff}
+.vc-notebtn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* ── RESOURCES ── */
+.res-item{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px}
+.res-ico{font-size:20px;flex-shrink:0;margin-top:1px}
+.res-title{font-size:14px;font-weight:600;color:var(--navy)}
+.res-desc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
+
+/* ── CHECKLIST ── */
+.chk-item{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:.12s}
+.chk-item.done{opacity:.52}
+.chk-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:.18s;background:#fff;margin-top:1px}
+.chk-item.done .chk-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.chk-text{font-size:14px;flex:1;line-height:1.45}
+.chk-item.done .chk-text{text-decoration:line-through;color:var(--muted)}
+
+/* ── SUMMARY ── */
+.priority-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.pdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.pinfo{flex:1;min-width:0}
+.pco{font-size:14px;font-weight:700;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.psub{font-size:12px;color:var(--muted)}
+.pbadge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;flex-shrink:0}
+.export-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;font-size:12px;font-family:'DM Mono',monospace;color:var(--text);white-space:pre-wrap;line-height:1.7;max-height:270px;overflow-y:auto;word-break:break-all}
+
+/* ── EMPTY ── */
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty-ico{font-size:42px;margin-bottom:10px}
+.empty-txt{font-size:15px;font-weight:600}
+.empty-sub{font-size:13px;margin-top:4px;opacity:.7}
+
+/* ── FAB ── */
+.fab{position:fixed;bottom:20px;right:14px;background:var(--gold);color:var(--navy);border:none;border-radius:26px;padding:13px 18px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(249,168,37,.48);z-index:50;display:none;align-items:center;gap:6px}
+.fab.show{display:flex}
+.fab:active{transform:scale(.96)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-logo">JLT <span>Expo</span> Tool</div>
+    <div class="lang-row">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+    </div>
+  </div>
+  <div class="hdr-expo">
+    <input class="expo-input" id="expo-name" placeholder="Expo / Event name…" oninput="save()">
+    <input class="expo-date" id="expo-date" type="date" oninput="save()">
+  </div>
+  <div class="tab-bar">
+    <button class="tab active" id="tab-capture" onclick="go('capture')">⚡ <span data-i18n="tab_capture">Capture</span></button>
+    <button class="tab" id="tab-log" onclick="go('log')">📋 <span data-i18n="tab_log">Log</span></button>
+    <button class="tab" id="tab-resources" onclick="go('resources')">📦 <span data-i18n="tab_resources">Resources</span></button>
+    <button class="tab" id="tab-checklist" onclick="go('checklist')">✅ <span data-i18n="tab_checklist">Checklist</span></button>
+    <button class="tab" id="tab-summary" onclick="go('summary')">📊 <span data-i18n="tab_summary">Summary</span></button>
+  </div>
+</div>
 
 
+<!-- ══════════════════════════════════════════
+     CAPTURE
+══════════════════════════════════════════ -->
+<div class="view active" id="view-capture">
+
+  <div class="counter-strip">
+    <div class="cpill"><div class="cnum" id="c-total" style="color:var(--navy)">0</div><div class="clbl" data-i18n="total">Total</div></div>
+    <div class="cpill"><div class="cnum" id="c-hot" style="color:var(--hot)">0</div><div class="clbl">🔥 Hot</div></div>
+    <div class="cpill"><div class="cnum" id="c-warm" style="color:var(--warm)">0</div><div class="clbl">☀️ Warm</div></div>
+    <div class="cpill"><div class="cnum" id="c-cold" style="color:var(--cold)">0</div><div class="clbl">❄️ Cold</div></div>
+  </div>
+
+  <div id="voice-unsupported" class="voice-unsupported">⚠️ Voice not available in this browser. Use Chrome or Safari. You can still type below.</div>
+
+  <div class="card">
+
+    <!-- Company + Contact -->
+    <div class="company-wrap">
+      <input class="company-big" id="f-company" placeholder="Company name…" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="contact-mini-row">
+        <input class="mini-inp" id="f-contact" placeholder="Contact name" autocomplete="off">
+        <input class="mini-inp" id="f-title" placeholder="Title / Role" autocomplete="off">
+      </div>
+      <div class="contact-mini-row" style="margin-top:6px">
+        <input class="mini-inp" id="f-email" placeholder="Email" type="email" autocomplete="off">
+        <input class="mini-inp" id="f-phone" placeholder="Phone / WeChat" autocomplete="off">
+      </div>
+    </div>
+
+    <!-- Temperature -->
+    <div class="temp-row">
+      <button class="temp-btn" data-t="hot" onclick="setTemp(this)"><span class="emo">🔥</span><span data-i18n="hot">Hot</span></button>
+      <button class="temp-btn" data-t="warm" onclick="setTemp(this)"><span class="emo">☀️</span><span data-i18n="warm">Warm</span></button>
+      <button class="temp-btn" data-t="cold" onclick="setTemp(this)"><span class="emo">❄️</span><span data-i18n="cold">Cold</span></button>
+      <button class="temp-btn" data-t="browse" onclick="setTemp(this)"><span class="emo">👁</span><span data-i18n="browse">Browse</span></button>
+    </div>
+
+    <!-- Products -->
+    <div class="tags-sec">
+      <div class="tlabel" data-i18n="products_interest">Products of Interest</div>
+      <div class="tgrid" id="prod-tags">
+        <span class="ptag" onclick="toggleTag(this)">EPDM Seals</span>
+        <span class="ptag" onclick="toggleTag(this)">Silicone Profiles</span>
+        <span class="ptag" onclick="toggleTag(this)">Door Seals</span>
+        <span class="ptag" onclick="toggleTag(this)">Sunroof</span>
+        <span class="ptag" onclick="toggleTag(this)">Glass Run</span>
+        <span class="ptag" onclick="toggleTag(this)">Trunk Seals</span>
+        <span class="ptag" onclick="toggleTag(this)">EV / BEV</span>
+        <span class="ptag" onclick="toggleTag(this)">NVH</span>
+        <span class="ptag" onclick="toggleTag(this)">Custom</span>
+        <span class="ptag" onclick="toggleTag(this)">Tooling</span>
+        <span class="ptag" onclick="toggleTag(this)">Other</span>
+      </div>
+    </div>
+
+    <!-- Region -->
+    <div class="tags-sec">
+      <div class="tlabel" data-i18n="region">Region / Market</div>
+      <div class="tgrid" id="region-tags">
+        <span class="ptag" onclick="toggleTag(this)">North America</span>
+        <span class="ptag" onclick="toggleTag(this)">Europe</span>
+        <span class="ptag" onclick="toggleTag(this)">China</span>
+        <span class="ptag" onclick="toggleTag(this)">Mexico</span>
+        <span class="ptag" onclick="toggleTag(this)">Global</span>
+      </div>
+    </div>
+
+    <!-- ── VOICE NOTE ── -->
+    <div class="voice-sec">
+      <div class="vtop">
+        <div class="vlabel">🎙 <span data-i18n="voice_note">Voice Note</span></div>
+        <span class="free-badge">Free — No API Key</span>
+      </div>
+      <div class="vlang-row">
+        <button class="vchip active" data-lang="en-US" onclick="setVLang(this)">🇺🇸 EN</button>
+        <button class="vchip" data-lang="zh-CN" onclick="setVLang(this)">🇨🇳 中文</button>
+        <button class="vchip" data-lang="es-MX" onclick="setVLang(this)">🇲🇽 ES</button>
+        <button class="vchip" data-lang="de-DE" onclick="setVLang(this)">🇩🇪 DE</button>
+        <button class="vchip" data-lang="fr-FR" onclick="setVLang(this)">🇫🇷 FR</button>
+        <button class="vchip" data-lang="ja-JP" onclick="setVLang(this)">🇯🇵 JA</button>
+      </div>
+      <div class="mic-row">
+        <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎙</button>
+        <div class="mic-info">
+          <div class="mic-status" id="mic-status" data-i18n="tap_mic">Tap mic to record</div>
+          <div class="mic-hint" id="mic-hint">Transcript appears live as you speak</div>
+        </div>
+      </div>
+      <textarea class="transcript" id="transcript" rows="3" placeholder="Voice transcript appears here — or type directly…"></textarea>
+      <div class="pchips">
+        <span class="pchip" onclick="pre('Competitor: ')">⚡ Competitor</span>
+        <span class="pchip" onclick="pre('Sample for: ')">🧪 Sample</span>
+        <span class="pchip" onclick="pre('Price/MOQ. ')">💰 Price</span>
+        <span class="pchip" onclick="pre('Follow up: ')">📅 Date</span>
+        <span class="pchip" onclick="pre('Pain point: ')">🎯 Pain</span>
+        <span class="pchip" onclick="pre('Buying from: ')">🔄 Supplier</span>
+        <span class="pchip" onclick="pre('Volume: ')">📦 Volume</span>
+        <span class="pchip" onclick="pre('Decision maker: ')">👤 DM</span>
+      </div>
+      <div class="ai-row">
+        <button class="aibtn aibtn-sum" onclick="localSummarize()">✨ <span data-i18n="summarize">Summarize</span></button>
+        <button class="aibtn aibtn-zh"  onclick="localTranslate('zh')">🇨🇳 → 中文</button>
+        <button class="aibtn aibtn-en"  onclick="localTranslate('en')">🇺🇸 → EN</button>
+        <button class="aibtn aibtn-clr" onclick="clearVoice()">✕</button>
+      </div>
+      <div class="ai-result" id="ai-result">
+        <div class="ai-rlbl" id="ai-lbl"></div>
+        <div id="ai-text"></div>
+      </div>
+    </div>
+
+    <!-- Questions they asked -->
+    <div class="tags-sec">
+      <div class="tlabel" data-i18n="their_questions">Questions they asked us</div>
+      <textarea class="finput" id="f-questions" rows="2" placeholder="Pricing, MOQ, lead time, certs, EV options…" style="margin-top:0"></textarea>
+    </div>
+
+    <!-- Materials given -->
+    <div class="tags-sec">
+      <div class="tlabel" data-i18n="materials_given">Materials given to them</div>
+      <div class="tgrid" id="materials-tags">
+        <span class="ptag" onclick="toggleTag(this)">Business Card</span>
+        <span class="ptag" onclick="toggleTag(this)">Catalogue</span>
+        <span class="ptag" onclick="toggleTag(this)">Sample Kit</span>
+        <span class="ptag" onclick="toggleTag(this)">Spec Sheet</span>
+        <span class="ptag" onclick="toggleTag(this)">WeChat QR</span>
+        <span class="ptag" onclick="toggleTag(this)">USB / Link</span>
+      </div>
+    </div>
+
+    <!-- Next steps -->
+    <div class="tags-sec" style="border-bottom:none">
+      <div class="tlabel" data-i18n="next_step">Next Step</div>
+      <div class="tgrid" id="next-tags">
+        <span class="ptag gold" onclick="toggleTag(this)">Send Sample</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Send Catalogue</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Schedule Call</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Quote</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Add WeChat</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Factory Visit</span>
+        <span class="ptag gold" onclick="toggleTag(this)">Follow Up Email</span>
+        <span class="ptag gold" onclick="toggleTag(this)">No Action</span>
+      </div>
+    </div>
+
+    <!-- Save -->
+    <div class="save-wrap">
+      <button class="save-btn" id="save-btn" onclick="saveVisit()">
+        <span id="save-txt" data-i18n="save_visit">＋ Save & Clear</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 
-🔥
-Hot
-☀️
-Warm
-❄️
-Cold
-👁
-Browse
-PRODUCTS OF INTEREST
-EPDM Seals
-Silicone Profiles
-Door Seals
-Sunroof
-Glass Run
-Trunk Seals
-EV / BEV
-NVH
-Custom
-Tooling
-Other
-REGION / MARKET
-North America
-Europe
-China
-Mexico
-Global
-🎙 VOICE NOTE
-Free — No API Key
-🇺🇸 EN
-🇨🇳 中文
-🇲🇽 ES
-🇩🇪 DE
-🇫🇷 FR
-🇯🇵 JA
-🎙
-Tap mic to record
-Transcript appears live as you speak
-⚡ Competitor
-🧪 Sample
-💰 Price
-📅 Date
-🎯 Pain
-🔄 Supplier
-📦 Volume
-👤 DM
-✨
-Summarize
-🇨🇳 → 中文 🇺🇸 → EN ✕
-QUESTIONS THEY ASKED US
-MATERIALS GIVEN TO THEM
-Business Card
-Catalogue
-Sample Kit
-Spec Sheet
-WeChat QR
-USB / Link
-NEXT STEP
-Send Sample
-Send Catalogue
-Schedule Call
-Quote
-Add WeChat
-Factory Visit
-Follow Up Email
-No Action
-＋ Save & Clear
+<!-- ══════════════════════════════════════════
+     LOG
+══════════════════════════════════════════ -->
+<div class="view" id="view-log">
+  <div class="log-filters">
+    <button class="fbtn active" onclick="setFilter('all',this)" data-i18n-btn="all">All</button>
+    <button class="fbtn" onclick="setFilter('hot',this)">🔥 Hot</button>
+    <button class="fbtn" onclick="setFilter('warm',this)">☀️ Warm</button>
+    <button class="fbtn" onclick="setFilter('cold',this)">❄️ Cold</button>
+    <button class="fbtn" onclick="setFilter('browse',this)">👁 Browse</button>
+  </div>
+  <div id="log-list"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     RESOURCES
+══════════════════════════════════════════ -->
+<div class="view" id="view-resources">
+  <div class="slabel" data-i18n="jlt_ref">JLT Company Quick Reference</div>
+
+  <div class="res-item"><div class="res-ico">🏭</div><div>
+    <div class="res-title">Manufacturing Locations</div>
+    <div class="res-desc">Huehuetoca, Mexico (main plant) · San Luis Potosí, Mexico (new 2026, 3 Naciones Industrial) · Jiangyin, China</div>
+  </div></div>
+  <div class="res-item"><div class="res-ico">🌐</div><div>
+    <div class="res-title">Website & Contact</div>
+    <div class="res-desc">www.jltautomotive.com · info@jltautomotive.com</div>
+  </div></div>
+  <div class="res-item"><div class="res-ico">🚗</div><div>
+    <div class="res-title">Core Products</div>
+    <div class="res-desc">EPDM & silicone sealing systems · Door / trunk / sunroof / glass run seals · NVH profiles · Custom extrusion · EV-optimized seals · Foam composites</div>
+  </div></div>
+  <div class="res-item"><div class="res-ico">✅</div><div>
+    <div class="res-title">Certifications</div>
+    <div class="res-desc">IATF 16949 · ISO 14001 · IMDS compliant · RoHS / REACH ready</div>
+  </div></div>
+  <div class="res-item"><div class="res-ico">⚡</div><div>
+    <div class="res-title">EV / BEV Capability</div>
+    <div class="res-desc">Battery pack seals · Thermal management profiles · Low-NVH door seals · Lightweight foam composites</div>
+  </div></div>
+
+  <div class="slabel" data-i18n="key_messages">Key Messages by Region</div>
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-title">🇺🇸 North America</span></div>
+    <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
+      Mexico nearshore manufacturing · USMCA compliant · San Luis Potosí new plant 2026 (BMW / GM supply chain proximity) · Fast delivery to US & Canada · IATF 16949
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-title">🇪🇺 Europe</span></div>
+    <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
+      European OEM experience · IATF 16949 · Competitive China-origin pricing with Mexico local support · EV transition readiness · REACH compliant materials · Tooling &amp; sampling support
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-title">🇨🇳 China / Asia</span></div>
+    <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
+      江阴生产基地 · 为欧美整车厂直供密封件 · 墨西哥工厂是出口平台 · 快速打样与工装交付 · IATF 16949认证 · EV密封解决方案
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-title">🇲🇽 Mexico</span></div>
+    <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
+      Planta principal en Huehuetoca · Nueva planta SLP 2026 junto a BMW y GM · USMCA · Entregas rápidas a clientes en México y EE.UU. · IATF 16949
+    </div>
+  </div>
+
+  <div class="slabel">Common Q&amp;A</div>
+  <div class="card"><div class="card-body" style="font-size:13px;line-height:1.85;color:var(--muted)">
+    <b style="color:var(--navy)">MOQ?</b> — Typically 500–1,000 linear meters for standard profiles. Custom tooling required for new cross-sections.<br><br>
+    <b style="color:var(--navy)">Lead time?</b> — Samples: 3–5 weeks. Production: 8–12 weeks after tooling approval.<br><br>
+    <b style="color:var(--navy)">Tooling cost?</b> — Amortized into unit price or charged separately depending on volume commitment.<br><br>
+    <b style="color:var(--navy)">IATF 16949?</b> — Yes, certified at both Mexico and China plants.<br><br>
+    <b style="color:var(--navy)">EV seals?</b> — Yes. Battery-grade silicone, thermal profiles, low-NVH door seals, lightweight foam composites all available.<br><br>
+    <b style="color:var(--navy)">Can you visit our factory?</b> — Yes, we welcome factory visits. Contact us to arrange.
+  </div></div>
+
+  <div class="slabel" data-i18n="your_notes">Your Notes</div>
+  <div class="card"><div class="card-body">
+    <textarea class="finput" id="resource-notes" rows="4" placeholder="Add your own notes, links, product updates…" oninput="save()"></textarea>
+  </div></div>
+
+  <div class="slabel">WeCom / WeChat Work Sharing</div>
+  <div class="card"><div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.65">
+    <b style="color:var(--navy)">To share with colleagues on 企业微信:</b><br>
+    1. Send this HTML file via WeCom file transfer<br>
+    2. Colleague opens in WeCom browser — works fully offline<br>
+    3. Or: tap <b>Generate Report</b> in Summary → Copy → paste into WeCom group
+  </div></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     CHECKLIST
+══════════════════════════════════════════ -->
+<div class="view" id="view-checklist">
+  <div class="slabel" data-i18n="before">Before the Expo</div>
+  <div id="chk-before"></div>
+  <div class="slabel" data-i18n="during">During the Expo</div>
+  <div id="chk-during"></div>
+  <div class="slabel" data-i18n="after">After the Expo</div>
+  <div id="chk-after"></div>
+  <div class="slabel" data-i18n="custom_tasks">Custom Tasks</div>
+  <div class="card" style="padding:11px 13px">
+    <div style="display:flex;gap:7px">
+      <input class="finput" id="custom-input" placeholder="Add a task…" style="margin:0;flex:1" onkeydown="if(event.key==='Enter')addTask()">
+      <button class="save-btn" style="width:auto;padding:9px 14px;font-size:13px;border-radius:8px" onclick="addTask()">Add</button>
+    </div>
+    <div id="custom-tasks" style="margin-top:8px"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SUMMARY
+══════════════════════════════════════════ -->
+<div class="view" id="view-summary">
+  <div class="slabel" data-i18n="stats">Stats</div>
+  <div class="counter-strip">
+    <div class="cpill"><div class="cnum" id="s-total" style="color:var(--navy)">0</div><div class="clbl" data-i18n="total">Total</div></div>
+    <div class="cpill"><div class="cnum" id="s-hot" style="color:var(--hot)">0</div><div class="clbl">🔥 Hot</div></div>
+    <div class="cpill"><div class="cnum" id="s-warm" style="color:var(--warm)">0</div><div class="clbl">☀️ Warm</div></div>
+    <div class="cpill"><div class="cnum" id="s-cold" style="color:var(--cold)">0</div><div class="clbl">❄️ Cold</div></div>
+  </div>
+
+  <div class="slabel" data-i18n="priority_followup">Priority Follow-Up</div>
+  <div id="priority-list"></div>
+
+  <div class="slabel" data-i18n="export">Export Report</div>
+  <button class="btn btn-gold" onclick="genReport()">📄 <span data-i18n="generate_report">Generate Text Report</span></button>
+  <div id="export-box" class="export-box" style="display:none;margin-bottom:10px"></div>
+  <button class="btn" id="copy-btn" onclick="copyReport()" style="display:none">📋 Copy to Clipboard</button>
+  <button class="btn btn-outline" style="margin-top:4px" onclick="if(confirm(T('confirm_clear')))clearAll()">🗑 <span data-i18n="clear_all">Clear All Data</span></button>
+</div>
+
+
+<!-- FAB -->
+<button class="fab" id="fab" onclick="go('capture')">⚡ <span data-i18n="capture">Capture</span></button>
+
+
+<script>
+// ════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════
+let visits=[], checklist={}, customTasks=[], lang='en';
+let voiceLang='en-US', recognition=null, isRecording=false;
+let logFilter='all', exportTxt='';
+
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem('jlt_full_v1')||'{}');
+    visits=d.visits||[]; checklist=d.checklist||{}; customTasks=d.customTasks||[];
+    lang=d.lang||'en'; voiceLang=d.voiceLang||'en-US';
+  }catch(e){}
+  try{ document.getElementById('expo-name').value=localStorage.getItem('jlt_expo_name')||''; }catch(e){}
+  try{ document.getElementById('expo-date').value=localStorage.getItem('jlt_expo_date')||new Date().toISOString().slice(0,10); }catch(e){}
+  try{ document.getElementById('resource-notes').value=localStorage.getItem('jlt_res_notes')||''; }catch(e){}
+  document.querySelectorAll('.vchip').forEach(c=>c.classList.toggle('active',c.dataset.lang===voiceLang));
+}
+function save(){
+  try{
+    localStorage.setItem('jlt_full_v1',JSON.stringify({visits,checklist,customTasks,lang,voiceLang}));
+    localStorage.setItem('jlt_expo_name',document.getElementById('expo-name').value);
+    localStorage.setItem('jlt_expo_date',document.getElementById('expo-date').value);
+    localStorage.setItem('jlt_res_notes',document.getElementById('resource-notes')?.value||'');
+  }catch(e){}
+  updateCounters();
+}
+
+// ════════════════════════════════════════════════════
+// I18N
+// ════════════════════════════════════════════════════
+const I18N={
+  en:{tab_capture:'Capture',tab_log:'Log',tab_resources:'Resources',tab_checklist:'Checklist',tab_summary:'Summary',
+    hot:'Hot',warm:'Warm',cold:'Cold',browse:'Browse',
+    products_interest:'Products of Interest',region:'Region / Market',voice_note:'Voice Note',
+    tap_mic:'Tap mic to record',their_questions:'Questions they asked us',materials_given:'Materials given to them',
+    next_step:'Next Step',save_visit:'＋ Save & Clear',total:'Total',stats:'Stats',
+    jlt_ref:'JLT Company Quick Reference',key_messages:'Key Messages by Region',your_notes:'Your Notes',
+    before:'Before the Expo',during:'During the Expo',after:'After the Expo',custom_tasks:'Custom Tasks',
+    priority_followup:'Priority Follow-Up',export:'Export Report',generate_report:'Generate Text Report',
+    clear_all:'Clear All Data',capture:'Capture',summarize:'Summarize',
+    confirm_clear:'Clear all data?',no_visits:'No visits logged yet',no_visits_sub:'Tap ⚡ Capture to log your first visit',saved:'Saved!'},
+  zh:{tab_capture:'记录',tab_log:'日志',tab_resources:'资料',tab_checklist:'清单',tab_summary:'汇总',
+    hot:'热门',warm:'温和',cold:'冷淡',browse:'浏览',
+    products_interest:'感兴趣产品',region:'地区 / 市场',voice_note:'语音备注',
+    tap_mic:'点击录音',their_questions:'对方提出的问题',materials_given:'已给对方资料',
+    next_step:'下一步行动',save_visit:'＋ 保存并清空',total:'合计',stats:'数据统计',
+    jlt_ref:'JLT公司参考资料',key_messages:'各区域关键话术',your_notes:'您的备注',
+    before:'展前准备',during:'展期执行',after:'展后跟进',custom_tasks:'自定义任务',
+    priority_followup:'优先跟进客户',export:'导出报告',generate_report:'生成文字报告',
+    clear_all:'清除所有数据',capture:'快速记录',summarize:'关键提炼',
+    confirm_clear:'确认清除所有数据？',no_visits:'暂无拜访记录',no_visits_sub:'点击⚡快速记录新增拜访',saved:'已保存！'},
+  es:{tab_capture:'Registrar',tab_log:'Registro',tab_resources:'Recursos',tab_checklist:'Lista',tab_summary:'Resumen',
+    hot:'Caliente',warm:'Tibio',cold:'Frío',browse:'Explorar',
+    products_interest:'Productos de Interés',region:'Región / Mercado',voice_note:'Nota de Voz',
+    tap_mic:'Toca para grabar',their_questions:'Sus preguntas',materials_given:'Material entregado',
+    next_step:'Próximo paso',save_visit:'＋ Guardar y Limpiar',total:'Total',stats:'Estadísticas',
+    jlt_ref:'Referencia Rápida JLT',key_messages:'Mensajes Clave',your_notes:'Tus Notas',
+    before:'Antes del Expo',during:'Durante el Expo',after:'Después del Expo',custom_tasks:'Tareas Personalizadas',
+    priority_followup:'Seguimiento Prioritario',export:'Exportar Reporte',generate_report:'Generar Reporte',
+    clear_all:'Borrar Todo',capture:'Registrar',summarize:'Resumir',
+    confirm_clear:'¿Borrar todos los datos?',no_visits:'Sin visitas registradas',no_visits_sub:'Toca ⚡ Registrar para comenzar',saved:'¡Guardado!'},
+  de:{tab_capture:'Erfassen',tab_log:'Log',tab_resources:'Material',tab_checklist:'Checkliste',tab_summary:'Auswertung',
+    hot:'Heiß',warm:'Warm',cold:'Kalt',browse:'Schauen',
+    products_interest:'Interessierte Produkte',region:'Region / Markt',voice_note:'Sprachnotiz',
+    tap_mic:'Mikrofon starten',their_questions:'Ihre Fragen',materials_given:'Ausgehändigtes Material',
+    next_step:'Nächster Schritt',save_visit:'＋ Speichern & Leeren',total:'Gesamt',stats:'Statistik',
+    jlt_ref:'JLT Kurzreferenz',key_messages:'Kernbotschaften',your_notes:'Ihre Notizen',
+    before:'Vor der Messe',during:'Während der Messe',after:'Nach der Messe',custom_tasks:'Eigene Aufgaben',
+    priority_followup:'Prioritäts-Follow-Up',export:'Bericht Exportieren',generate_report:'Bericht Erstellen',
+    clear_all:'Alle Daten Löschen',capture:'Erfassen',summarize:'Zusammenfassen',
+    confirm_clear:'Alle Daten löschen?',no_visits:'Keine Besuche erfasst',no_visits_sub:'Tippe ⚡ Erfassen für den ersten Besuch',saved:'Gespeichert!'}
+};
+function T(k){ return (I18N[lang]||I18N.en)[k]||k; }
+function setLang(l){
+  lang=l; save();
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l||(l==='zh'&&b.textContent==='中文')));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const v=T(el.dataset.i18n); if(v) el.textContent=v; });
+  updateCounters();
+  if(document.getElementById('view-checklist').classList.contains('active')) renderChecklist();
+}
+
+// ════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════
+function go(mode){
+  ['capture','log','resources','checklist','summary'].forEach(m=>{
+    document.getElementById('view-'+m).classList.toggle('active',m===mode);
+    document.getElementById('tab-'+m).classList.toggle('active',m===mode);
+  });
+  document.getElementById('fab').classList.toggle('show', mode!=='capture');
+  if(mode==='log') renderLog();
+  if(mode==='summary') renderSummary();
+  if(mode==='checklist') renderChecklist();
+  if(mode==='capture') setTimeout(()=>document.getElementById('f-company').focus(),100);
+}
+
+// ════════════════════════════════════════════════════
+// VOICE
+// ════════════════════════════════════════════════════
+(function initSpeech(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    document.getElementById('voice-unsupported').style.display='block';
+    const mb=document.getElementById('mic-btn');
+    mb.style.opacity='.3'; mb.style.pointerEvents='none';
+    document.getElementById('mic-status').textContent='Voice not available — type below';
+  }
+})();
+
+function setVLang(btn){
+  voiceLang=btn.dataset.lang;
+  document.querySelectorAll('.vchip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  save();
+  if(isRecording){ stopMic(); setTimeout(startMic,300); }
+}
+function toggleMic(){ isRecording?stopMic():startMic(); }
+function startMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return;
+  recognition=new SR();
+  recognition.continuous=true; recognition.interimResults=true; recognition.lang=voiceLang;
+  const ta=document.getElementById('transcript');
+  const btn=document.getElementById('mic-btn');
+  const status=document.getElementById('mic-status');
+  let base=ta.value.trim();
+  recognition.onstart=()=>{
+    isRecording=true; btn.classList.add('rec'); btn.textContent='⏹';
+    status.textContent='Recording…'; status.className='mic-status rec';
+    document.getElementById('mic-hint').textContent='Tap ⏹ to stop';
+  };
+  recognition.onresult=(e)=>{
+    let interim='',newFinal='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) newFinal+=t; else interim+=t;
+    }
+    if(newFinal) base=(base+' '+newFinal).trim();
+    ta.value=interim?base+' '+interim:base;
+    ta.style.height='auto'; ta.style.height=ta.scrollHeight+'px';
+  };
+  recognition.onerror=(e)=>{
+    document.getElementById('mic-status').textContent=e.error==='not-allowed'?'🚫 Mic blocked':'⚠️ '+e.error+' — retry';
+    document.getElementById('mic-status').className='mic-status';
+    stopMic();
+  };
+  recognition.onend=()=>{ if(isRecording){ try{recognition.start();}catch(err){stopMic();} } };
+  try{ recognition.start(); }catch(e){ document.getElementById('mic-status').textContent='Could not start'; }
+}
+function stopMic(){
+  isRecording=false;
+  if(recognition){ try{recognition.stop();}catch(e){} recognition=null; }
+  const btn=document.getElementById('mic-btn');
+  btn.classList.remove('rec'); btn.textContent='🎙';
+  document.getElementById('mic-status').textContent=T('tap_mic');
+  document.getElementById('mic-status').className='mic-status';
+  document.getElementById('mic-hint').textContent='Transcript is editable';
+}
+function pre(text){
+  const ta=document.getElementById('transcript');
+  ta.value=(ta.value.trim()?ta.value.trim()+' ':'')+text;
+  ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length);
+}
+function clearVoice(){
+  document.getElementById('transcript').value='';
+  document.getElementById('ai-result').style.display='none';
+  if(isRecording) stopMic();
+}
+
+// ════════════════════════════════════════════════════
+// LOCAL SUMMARIZE
+// ════════════════════════════════════════════════════
+function localSummarize(){
+  const text=document.getElementById('transcript').value.trim();
+  if(!text){ alert('Record or type a voice note first.'); return; }
+  const lines=[];
+  const comp=text.match(/(?:competitor|currently using|buying from|working with|supplier is?)\s+([\w\s&]+?)(?:\.|,|$)/i);
+  if(comp) lines.push('• Competitor / current supplier: '+comp[1].trim());
+  if(/\b(price|pricing|cost|moq|minimum|quantity|how much)\b/i.test(text)) lines.push('• Asked about: pricing / MOQ');
+  const smp=text.match(/(?:sample|prototype|trial)\s+(?:of|for)?\s*([\w\s]+?)(?:\.|,|$)/i);
+  if(smp) lines.push('• Sample requested: '+smp[1].trim());
+  const dt=text.match(/(?:by|before|end of|next|in)\s+(january|february|march|april|may|june|july|august|september|october|november|december|\d+\s*(?:week|month|day)s?|Q[1-4])/i);
+  if(dt) lines.push('• Timeline: '+dt[0].trim());
+  const vol=text.match(/(\d[\d,]*\s*(?:k|thousand|million|units?|pieces?|pcs?|sets?|m\b)(?:\s*(?:per|\/)\s*(?:year|month|week))?)/i);
+  if(vol) lines.push('• Volume: '+vol[1].trim());
+  if(/\b(iatf|iso|reach|rohs|cert|standard|compliance)\b/i.test(text)) lines.push('• Certification topic raised');
+  if(/\b(ev|bev|electric|battery|electr)\b/i.test(text)) lines.push('• EV / electric vehicle interest');
+  const dm=text.match(/(?:decision|approve|manager|director|vp|head of)\s+(?:is\s+)?([\w]+)/i);
+  if(dm) lines.push('• Decision maker: '+dm[1]);
+  const pain=text.match(/(?:problem|issue|challenge|pain|concern|need|looking for)\s+([\w\s]+?)(?:\.|,|but|and|$)/i);
+  if(pain) lines.push('• Key need: '+pain[1].trim());
+  const result=lines.length?lines.join('\n'):'• Note captured — review full transcript\n• No specific keywords auto-detected';
+  showAI('✨ Key Points', result);
+  document.getElementById('transcript').dataset.aiResult=result;
+  document.getElementById('transcript').dataset.aiLabel='✨ Summary';
+}
+
+// ════════════════════════════════════════════════════
+// FREE TRANSLATE (MyMemory API — no key)
+// ════════════════════════════════════════════════════
+async function localTranslate(to){
+  const text=document.getElementById('transcript').value.trim();
+  if(!text){ alert('Record or type something first.'); return; }
+  if(text.length>500){ alert('Note too long for free translation (max ~500 chars). Summarize first.'); return; }
+  const label=to==='zh'?'🇨🇳 → 中文':'🇺🇸 → English';
+  showAI(label,'<span class="spinner"></span> Translating…',true);
+  const src=voiceLang.split('-')[0];
+  const tgt=to==='zh'?'zh':'en';
+  try{
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    if(data.responseStatus!==200) throw new Error(data.responseMessage);
+    showAI(label,data.responseData.translatedText);
+    document.getElementById('transcript').dataset.aiResult=data.responseData.translatedText;
+    document.getElementById('transcript').dataset.aiLabel=label;
+  }catch(e){
+    showAI('⚠️ Translation error','Could not reach translation service. Check internet connection.\n\nTip: Copy text and use Google Translate manually.');
+  }
+}
+function showAI(label,text,isHTML=false){
+  document.getElementById('ai-lbl').textContent=label;
+  const el=document.getElementById('ai-text');
+  if(isHTML) el.innerHTML=text; else el.textContent=text;
+  document.getElementById('ai-result').style.display='block';
+}
+
+// ════════════════════════════════════════════════════
+// FORM
+// ════════════════════════════════════════════════════
+let currentTemp='';
+function setTemp(btn){
+  document.querySelectorAll('.temp-btn').forEach(b=>b.className='temp-btn');
+  btn.classList.add('sel-'+btn.dataset.t); currentTemp=btn.dataset.t;
+}
+function toggleTag(el){ el.classList.toggle('sel'); }
+function getTags(id){ return [...document.querySelectorAll(`#${id} .ptag.sel`)].map(t=>t.textContent.trim()); }
+
+function saveVisit(){
+  const company=document.getElementById('f-company').value.trim();
+  if(!company){
+    const inp=document.getElementById('f-company');
+    inp.style.outline='2px solid #EF4444'; inp.focus();
+    setTimeout(()=>inp.style.outline='',1200); return;
+  }
+  if(isRecording) stopMic();
+  const ta=document.getElementById('transcript');
+  visits.unshift({
+    id:Date.now(),
+    time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    company,
+    contact:document.getElementById('f-contact').value.trim(),
+    title:document.getElementById('f-title').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    temp:currentTemp,
+    products:getTags('prod-tags'),
+    regions:getTags('region-tags'),
+    nextSteps:getTags('next-tags'),
+    materials:getTags('materials-tags'),
+    questions:document.getElementById('f-questions').value.trim(),
+    note:ta.value.trim(),
+    aiResult:ta.dataset.aiResult||'',
+    aiLabel:ta.dataset.aiLabel||'',
+  });
+  save();
+  const btn=document.getElementById('save-btn'), txt=document.getElementById('save-txt');
+  btn.classList.add('ok'); txt.textContent='✓ '+T('saved')+' — '+company;
+  setTimeout(()=>{ btn.classList.remove('ok'); txt.textContent=T('save_visit'); },1800);
+  clearForm();
+  setTimeout(()=>document.getElementById('f-company').focus(),120);
+}
+
+function clearForm(){
+  ['f-company','f-contact','f-title','f-email','f-phone','f-questions'].forEach(id=>document.getElementById(id).value='');
+  const ta=document.getElementById('transcript');
+  ta.value=''; ta.dataset.aiResult=''; ta.dataset.aiLabel='';
+  document.getElementById('ai-result').style.display='none';
+  document.querySelectorAll('.temp-btn').forEach(b=>b.className='temp-btn');
+  document.querySelectorAll('.ptag').forEach(t=>t.classList.remove('sel'));
+  currentTemp='';
+}
+
+// ════════════════════════════════════════════════════
+// COUNTERS
+// ════════════════════════════════════════════════════
+function updateCounters(){
+  const hot=visits.filter(v=>v.temp==='hot').length;
+  const warm=visits.filter(v=>v.temp==='warm').length;
+  const cold=visits.filter(v=>v.temp==='cold').length;
+  const total=visits.length;
+  [['c-total','s-total',total],['c-hot','s-hot',hot],['c-warm','s-warm',warm],['c-cold','s-cold',cold]].forEach(([a,b,n])=>{
+    [a,b].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=n;});
+  });
+}
+
+// ════════════════════════════════════════════════════
+// LOG
+// ════════════════════════════════════════════════════
+function setFilter(f,btn){
+  logFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderLog();
+}
+function renderLog(){
+  const el=document.getElementById('log-list');
+  const list=logFilter==='all'?visits:visits.filter(v=>v.temp===logFilter);
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="empty-ico">📋</div>
+      <div class="empty-txt">${T(logFilter==='all'?'no_visits':'no_visits')}</div>
+      <div class="empty-sub">${T(logFilter==='all'?'no_visits_sub':'no_visits_sub')}</div></div>`;
+    return;
+  }
+  el.innerHTML=list.map(v=>{
+    const tl={hot:'🔥 Hot',warm:'☀️ Warm',cold:'❄️ Cold',browse:'👁 Browse'}[v.temp]||'';
+    const prods=v.products.map(p=>`<span class="vtag vt-prod">${p}</span>`).join('');
+    const regs=v.regions.map(r=>`<span class="vtag vt-reg">${r}</span>`).join('');
+    const nexts=v.nextSteps.map(s=>`<span class="vtag vt-next">${s}</span>`).join('');
+    const mats=v.materials.map(m=>`<span class="vtag vt-mat">${m}</span>`).join('');
+    const contact=[v.contact,v.title].filter(Boolean).join(' · ');
+    const contact2=[v.email,v.phone].filter(Boolean).join(' · ');
+    return `<div class="vcard" id="vc${v.id}">
+      <button class="vc-del" onclick="delVisit(${v.id})">×</button>
+      <div class="vc-top">
+        <div><div class="vc-co">${v.company}</div>
+        <div class="vc-ct">${contact}${contact2?'<br>'+contact2:''}</div></div>
+        <div class="vc-time">${v.time}</div>
+      </div>
+      <div class="vc-tags">
+        ${tl?`<span class="vtag vt-${v.temp}">${tl}</span>`:''}${prods}${regs}${nexts}${mats}
+      </div>
+      ${v.questions?`<div class="vc-note"><b>Q:</b> ${v.questions}</div>`:''}
+      ${v.note?`<div class="vc-note">🎙 ${v.note.replace(/\n/g,'<br>')}</div>`:''}
+      ${v.aiResult?`<div class="vc-ai"><div class="vc-ai-lbl">${v.aiLabel||'AI Note'}</div>${v.aiResult.replace(/\n/g,'<br>')}</div>`:''}
+      <div class="vc-actions">
+        ${v.email?`<button class="vc-act" onclick="location='mailto:${v.email}'">✉️</button>`:''}
+        ${v.phone?`<button class="vc-act" onclick="location='tel:${v.phone}'">📞</button>`:''}
+        <button class="vc-act primary" onclick="editNote(${v.id})">📝 Note</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function editNote(id){
+  const v=visits.find(x=>x.id===id);
+  if(!v) return;
+  const n=prompt('Edit note:',v.note||'');
+  if(n!==null){ v.note=n; save(); renderLog(); }
+}
+function delVisit(id){
+  if(!confirm('Delete?')) return;
+  visits=visits.filter(v=>v.id!==id); save(); renderLog();
+}
+
+// ════════════════════════════════════════════════════
+// CHECKLIST
+// ════════════════════════════════════════════════════
+const CHECKLISTS={
+  before:[
+    'Print / charge business cards',
+    'Load product catalogue on phone / tablet',
+    'Prepare JLT sample kit',
+    'Set expo goals (# contacts, target companies)',
+    'Research exhibitor list for target companies',
+    'Prepare JLT elevator pitch (30 sec)',
+    'Confirm hotel, booth number, badge pickup',
+    'Share expo tool HTML with team via WeCom',
+    'Set up WeCom expo team group chat',
+    'Charge phone & portable battery',
+  ],
+  during:[
+    'Log each booth visit immediately after conversation',
+    'Collect business cards / scan QR codes',
+    'Note specific questions asked by contacts',
+    'Record competitor mentions',
+    'Photograph interesting booth / products',
+    'Use voice notes for fast capture while walking',
+    'Check in with team on WeCom group daily',
+    'Flag hot leads to manager same day',
+    'Replenish business cards / samples if running low',
+    'Attend relevant technical sessions',
+  ],
+  after:[
+    'Export visit log from Summary tab',
+    'Share report to WeCom team group',
+    'Send follow-up emails within 48 hours',
+    'Add hot / warm leads to CRM',
+    'Send samples to interested contacts',
+    'Schedule follow-up calls with hot leads',
+    'Update colleague in China / Europe on leads',
+    'Write internal debrief note',
+    'File business cards / contacts',
+    'Review and update next expo checklist',
+  ]
+};
+function renderChecklist(){
+  ['before','during','after'].forEach(phase=>{
+    const el=document.getElementById('chk-'+phase);
+    el.innerHTML=CHECKLISTS[phase].map((item,i)=>{
+      const key=`${phase}_${i}`;
+      const done=!!checklist[key];
+      return `<div class="chk-item${done?' done':''}" onclick="toggleCheck('${key}',this)">
+        <div class="chk-circle">${done?'✓':''}</div>
+        <div class="chk-text">${item}</div>
+      </div>`;
+    }).join('');
+  });
+  renderCustomTasks();
+}
+function toggleCheck(key,el){
+  checklist[key]=!checklist[key];
+  el.classList.toggle('done');
+  el.querySelector('.chk-circle').textContent=checklist[key]?'✓':'';
+  save();
+}
+function addTask(){
+  const inp=document.getElementById('custom-input');
+  const text=inp.value.trim(); if(!text) return;
+  customTasks.push({id:Date.now(),text,done:false});
+  inp.value=''; save(); renderCustomTasks();
+}
+function renderCustomTasks(){
+  const el=document.getElementById('custom-tasks');
+  if(!el) return;
+  el.innerHTML=customTasks.map(t=>`
+    <div class="chk-item${t.done?' done':''}" onclick="toggleCustom(${t.id},this)" style="margin-bottom:6px">
+      <div class="chk-circle">${t.done?'✓':''}</div>
+      <div class="chk-text">${t.text}</div>
+    </div>`).join('');
+}
+function toggleCustom(id,el){
+  const t=customTasks.find(x=>x.id===id);
+  if(t){ t.done=!t.done; el.classList.toggle('done'); el.querySelector('.chk-circle').textContent=t.done?'✓':''; save(); }
+}
+
+// ════════════════════════════════════════════════════
+// SUMMARY
+// ════════════════════════════════════════════════════
+function renderSummary(){
+  updateCounters();
+  const pl=document.getElementById('priority-list');
+  if(!visits.length){ pl.innerHTML=`<div class="empty" style="padding:20px 0"><div class="empty-txt">No visits yet</div></div>`; return; }
+  const order={hot:0,warm:1,cold:2,browse:3,'':4};
+  pl.innerHTML=[...visits].sort((a,b)=>(order[a.temp]??4)-(order[b.temp]??4)).map(v=>{
+    const dot={hot:'#E65100',warm:'#F9A825',cold:'#1E88E5'}[v.temp]||'#90A4AE';
+    const bg={hot:'#FFF3E0',warm:'#FFFDE7',cold:'#E3F2FD'}[v.temp]||'#F3F4F6';
+    const col={hot:'#E65100',warm:'#F57F17',cold:'#1565C0'}[v.temp]||'#607D8B';
+    const tl={hot:'🔥 Hot',warm:'☀️ Warm',cold:'❄️ Cold',browse:'👁 Browse'}[v.temp]||'—';
+    const next=v.nextSteps.slice(0,2).join(', ')||'—';
+    const snippet=v.aiResult?`<div style="font-size:12px;color:#1E1B4B;background:#EDE9FE;border-radius:6px;padding:5px 8px;margin-top:4px;border:1px solid #DDD6FE">${v.aiResult.replace(/\n/g,' | ').slice(0,130)}${v.aiResult.length>130?'…':''}</div>`:'';
+    return `<div class="priority-item">
+      <div class="pdot" style="background:${dot}"></div>
+      <div class="pinfo">
+        <div class="pco">${v.company}</div>
+        <div class="psub">${[v.contact,v.title].filter(Boolean).join(', ')||'—'} · ${next}</div>
+        ${snippet}
+      </div>
+      <span class="pbadge" style="background:${bg};color:${col}">${tl}</span>
+    </div>`;
+  }).join('');
+}
+
+function genReport(){
+  const expo=document.getElementById('expo-name').value||'Expo';
+  const date=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  let t=`JLT Technology — Expo Visit Report\nEvent: ${expo}\nDate: ${date}\n${'━'.repeat(44)}\n\n`;
+  t+=`TOTALS: ${visits.length} visits | 🔥 ${visits.filter(v=>v.temp==='hot').length} hot | ☀️ ${visits.filter(v=>v.temp==='warm').length} warm | ❄️ ${visits.filter(v=>v.temp==='cold').length} cold\n\n`;
+  [{label:'🔥 HOT LEADS',f:v=>v.temp==='hot'},{label:'☀️ WARM LEADS',f:v=>v.temp==='warm'},{label:'❄️ COLD / BROWSE',f:v=>v.temp==='cold'||v.temp==='browse'||!v.temp}].forEach(({label,f})=>{
+    const g=visits.filter(f); if(!g.length) return;
+    t+=`${label}\n${'─'.repeat(30)}\n`;
+    g.forEach(v=>{
+      t+=`\n▸ ${v.company}`;
+      if(v.contact) t+=` | ${v.contact}`;
+      if(v.title) t+=`, ${v.title}`;
+      if(v.email) t+=`\n  ✉ ${v.email}`;
+      if(v.phone) t+=`  📱 ${v.phone}`;
+      if(v.products.length) t+=`\n  Products: ${v.products.join(', ')}`;
+      if(v.regions.length) t+=`  |  Region: ${v.regions.join(', ')}`;
+      if(v.nextSteps.length) t+=`\n  Next: ${v.nextSteps.join(', ')}`;
+      if(v.materials.length) t+=`  |  Given: ${v.materials.join(', ')}`;
+      if(v.questions) t+=`\n  Q: ${v.questions}`;
+      if(v.aiResult) t+=`\n  Key points: ${v.aiResult.replace(/\n/g,' | ')}`;
+      else if(v.note) t+=`\n  Note: ${v.note.replace(/\n/g,' ')}`;
+      t+='\n';
+    });
+    t+='\n';
+  });
+  exportTxt=t;
+  document.getElementById('export-box').textContent=t;
+  document.getElementById('export-box').style.display='block';
+  document.getElementById('copy-btn').style.display='block';
+}
+
+function copyReport(){
+  if(!exportTxt) return;
+  navigator.clipboard?.writeText(exportTxt).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    btn.innerHTML='✓ Copied!'; btn.style.background='#1B5E20';
+    setTimeout(()=>{ btn.innerHTML='📋 Copy to Clipboard'; btn.style.background=''; },2000);
+  }).catch(()=>{ const ta=document.createElement('textarea');ta.value=exportTxt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Copied!'); });
+}
+
+function clearAll(){
+  visits=[]; checklist={}; customTasks=[]; save(); updateCounters();
+  renderLog(); renderSummary(); renderChecklist();
+  document.getElementById('export-box').style.display='none';
+  document.getElementById('copy-btn').style.display='none';
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+load();
+updateCounters();
+// Apply language UI
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',
+  b.textContent===lang||(lang==='zh'&&b.textContent==='中文')));
+document.getElementById('expo-date').value = document.getElementById('expo-date').value ||
+  new Date().toISOString().slice(0,10);
+renderChecklist();
+setTimeout(()=>document.getElementById('f-company').focus(),400);
+</script>
+</body>
+</html>
