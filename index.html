@@ -1,23 +1,4 @@
-(function(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  const ua=navigator.userAgent;
-  const isWeChat=/micromessenger/i.test(ua);
-  const isIOS=/iphone|ipad|ipod/i.test(ua);
-  const isSafari=/^((?!chrome|android).)*safari/i.test(ua);
-  const warn=document.getElementById('voice-unsupported');
-  const status=document.getElementById('mic-status');
-  if(!SR){
-    warn.textContent=isWeChat?'WeChat blocks voice — open link in Safari or Chrome.':isIOS?'For voice on iPhone, open this page in Safari.':'Voice needs Chrome (Android) or Safari (iPhone).';
-    warn.style.display='block';
-    const mb=document.getElementById('mic-btn');mb.style.opacity='.35';mb.style.pointerEvents='none';
-    status.textContent='Open in Safari or Chrome for voice';
-  } else if(isIOS&&isSafari){
-    status.textContent='Tap mic — allow microphone when prompted';
-    document.getElementById('mic-hint').textContent='Tap Allow when Safari asks for mic access';
-  } else if(isWeChat){
-    warn.textContent='WeChat may block mic. If it fails, open in Safari or Chrome.';warn.style.display='block';
-  }
-})();<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -40,7 +21,7 @@
 html{height:100%;background:var(--bg)}
 body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-size:15px;overscroll-behavior:none}
 
-/* ââ HEADER ââ */
+/* ── HEADER ── */
 .hdr{background:var(--navy);padding:10px 14px 0;position:sticky;top:0;z-index:100}
 .hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .hdr-logo{font-size:15px;font-weight:700;color:#fff}
@@ -53,39 +34,39 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .expo-input::placeholder{color:rgba(255,255,255,.35)}
 .expo-date{background:none;border:none;outline:none;color:rgba(255,255,255,.55);font-family:inherit;font-size:12px;color-scheme:dark;width:110px;text-align:right}
 
-/* ââ TAB BAR ââ */
+/* ── TAB BAR ── */
 .tab-bar{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
 .tab-bar::-webkit-scrollbar{display:none}
 .tab{flex-shrink:0;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.55);font-family:inherit;font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:18px;cursor:pointer;transition:.12s;letter-spacing:.02em}
 .tab.active{background:var(--gold);color:var(--navy)}
 
-/* ââ VIEWS ââ */
+/* ── VIEWS ── */
 .view{display:none;padding:12px 14px 100px;max-width:560px;margin:0 auto}
 .view.active{display:block}
 .slabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:16px 0 8px;padding-left:2px}
 .slabel:first-child{margin-top:4px}
 
-/* ââ CARDS ââ */
+/* ── CARDS ── */
 .card{background:var(--card);border-radius:var(--radius);box-shadow:0 2px 12px rgba(13,27,62,.09);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
 .card-hdr{background:var(--navy);padding:9px 13px;display:flex;align-items:center;justify-content:space-between}
 .card-hdr-title{color:#fff;font-size:13px;font-weight:700}
 .card-hdr-badge{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
 .card-body{padding:11px 13px}
 
-/* ââ COUNTERS ââ */
+/* ── COUNTERS ── */
 .counter-strip{display:flex;gap:7px;margin-bottom:10px}
 .cpill{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .cnum{font-size:21px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
 .clbl{font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}
 
-/* ââ FORM INPUTS ââ */
+/* ── FORM INPUTS ── */
 .fgroup{margin-bottom:10px}
 .flabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;display:block}
 .finput{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:.15s;resize:none}
 .finput:focus{border-color:var(--navy);background:#fff}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* ââ COMPANY BIG INPUT (capture mode) ââ */
+/* ── COMPANY BIG INPUT (capture mode) ── */
 .company-wrap{padding:13px 14px 10px;border-bottom:1px solid var(--border)}
 .company-big{width:100%;border:none;outline:none;font-family:inherit;font-size:20px;font-weight:700;color:var(--navy);background:none;line-height:1.2}
 .company-big::placeholder{color:#C5CDD8;font-weight:400}
@@ -94,7 +75,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .mini-inp::placeholder{color:#B0BEC5}
 .mini-inp:focus{border-color:var(--navy)}
 
-/* ââ TEMPERATURE ââ */
+/* ── TEMPERATURE ── */
 .temp-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
 .temp-btn{border:none;background:none;padding:13px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:inherit;font-size:10.5px;font-weight:600;color:var(--muted);transition:.12s;border-right:1px solid var(--border);line-height:1}
 .temp-btn:last-child{border-right:none}
@@ -104,7 +85,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .temp-btn.sel-cold{background:var(--cold-bg);color:var(--cold)}
 .temp-btn.sel-browse{background:#F3F4F6;color:#374151}
 
-/* ââ TAGS / PILLS ââ */
+/* ── TAGS / PILLS ── */
 .tags-sec{padding:10px 13px 10px;border-bottom:1px solid var(--border)}
 .tags-sec:last-of-type{border-bottom:none}
 .tlabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
@@ -113,12 +94,12 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .ptag.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
 .ptag.gold.sel{background:var(--gold);color:var(--navy);border-color:var(--gold)}
 
-/* ââ RATING BUTTONS (full form) ââ */
+/* ── RATING BUTTONS (full form) ── */
 .rating-row{display:flex;gap:6px;margin-top:4px}
 .rtn{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 4px;font-size:17px;cursor:pointer;text-align:center;transition:.15s;line-height:1;font-family:inherit}
 .rtn.sel{border-color:var(--navy);background:var(--navy)}
 
-/* ââ VOICE SECTION ââ */
+/* ── VOICE SECTION ── */
 .voice-sec{padding:11px 13px 13px;border-bottom:1px solid var(--border)}
 .vtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .vlabel{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
@@ -153,7 +134,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 @keyframes spin{to{transform:rotate(360deg)}}
 .voice-unsupported{background:var(--hot-bg);border:1px solid #FFCC80;border-radius:9px;padding:9px 12px;font-size:13px;color:var(--hot);margin-bottom:8px;display:none}
 
-/* ââ SAVE / ACTION BUTTONS ââ */
+/* ── SAVE / ACTION BUTTONS ── */
 .save-wrap{padding:10px 13px}
 .save-btn{width:100%;padding:15px;background:var(--navy);color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
 .save-btn:active{transform:scale(.98)}
@@ -164,7 +145,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .btn-outline{background:none;color:var(--navy);border:2px solid var(--navy)}
 .btn-red{background:#B71C1C;color:#fff}
 
-/* ââ LOG ââ */
+/* ── LOG ── */
 .log-filters{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto;scrollbar-width:none}
 .log-filters::-webkit-scrollbar{display:none}
 .fbtn{flex-shrink:0;background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:.12s}
@@ -197,13 +178,13 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .vc-noteinput:focus{border-color:var(--navy);background:#fff}
 .vc-notebtn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 
-/* ââ RESOURCES ââ */
+/* ── RESOURCES ── */
 .res-item{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px}
 .res-ico{font-size:20px;flex-shrink:0;margin-top:1px}
 .res-title{font-size:14px;font-weight:600;color:var(--navy)}
 .res-desc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
 
-/* ââ CHECKLIST ââ */
+/* ── CHECKLIST ── */
 .chk-item{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:.12s}
 .chk-item.done{opacity:.52}
 .chk-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:.18s;background:#fff;margin-top:1px}
@@ -211,7 +192,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .chk-text{font-size:14px;flex:1;line-height:1.45}
 .chk-item.done .chk-text{text-decoration:line-through;color:var(--muted)}
 
-/* ââ SUMMARY ââ */
+/* ── SUMMARY ── */
 .priority-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .pdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .pinfo{flex:1;min-width:0}
@@ -220,13 +201,13 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 .pbadge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;flex-shrink:0}
 .export-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;font-size:12px;font-family:'DM Mono',monospace;color:var(--text);white-space:pre-wrap;line-height:1.7;max-height:270px;overflow-y:auto;word-break:break-all}
 
-/* ââ EMPTY ââ */
+/* ── EMPTY ── */
 .empty{text-align:center;padding:50px 20px;color:var(--muted)}
 .empty-ico{font-size:42px;margin-bottom:10px}
 .empty-txt{font-size:15px;font-weight:600}
 .empty-sub{font-size:13px;margin-top:4px;opacity:.7}
 
-/* ââ FAB ââ */
+/* ── FAB ── */
 .fab{position:fixed;bottom:20px;right:14px;background:var(--gold);color:var(--navy);border:none;border-radius:26px;padding:13px 18px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(249,168,37,.48);z-index:50;display:none;align-items:center;gap:6px}
 .fab.show{display:flex}
 .fab:active{transform:scale(.96)}
@@ -240,44 +221,44 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
     <div class="hdr-logo">JLT <span>Expo</span> Tool</div>
     <div class="lang-row">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">ä¸­æ</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
       <button class="lang-btn" onclick="setLang('es')">ES</button>
       <button class="lang-btn" onclick="setLang('de')">DE</button>
     </div>
   </div>
   <div class="hdr-expo">
-    <input class="expo-input" id="expo-name" placeholder="Expo / Event nameâ¦" oninput="save()">
+    <input class="expo-input" id="expo-name" placeholder="Expo / Event name…" oninput="save()">
     <input class="expo-date" id="expo-date" type="date" oninput="save()">
   </div>
   <div class="tab-bar">
-    <button class="tab active" id="tab-capture" onclick="go('capture')">â¡ <span data-i18n="tab_capture">Capture</span></button>
-    <button class="tab" id="tab-log" onclick="go('log')">ð <span data-i18n="tab_log">Log</span></button>
-    <button class="tab" id="tab-resources" onclick="go('resources')">ð¦ <span data-i18n="tab_resources">Resources</span></button>
-    <button class="tab" id="tab-checklist" onclick="go('checklist')">â <span data-i18n="tab_checklist">Checklist</span></button>
-    <button class="tab" id="tab-summary" onclick="go('summary')">ð <span data-i18n="tab_summary">Summary</span></button>
+    <button class="tab active" id="tab-capture" onclick="go('capture')">⚡ <span data-i18n="tab_capture">Capture</span></button>
+    <button class="tab" id="tab-log" onclick="go('log')">📋 <span data-i18n="tab_log">Log</span></button>
+    <button class="tab" id="tab-resources" onclick="go('resources')">📦 <span data-i18n="tab_resources">Resources</span></button>
+    <button class="tab" id="tab-checklist" onclick="go('checklist')">✅ <span data-i18n="tab_checklist">Checklist</span></button>
+    <button class="tab" id="tab-summary" onclick="go('summary')">📊 <span data-i18n="tab_summary">Summary</span></button>
   </div>
 </div>
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââ
+<!-- ══════════════════════════════════════════
      CAPTURE
-ââââââââââââââââââââââââââââââââââââââââââ -->
+══════════════════════════════════════════ -->
 <div class="view active" id="view-capture">
 
   <div class="counter-strip">
     <div class="cpill"><div class="cnum" id="c-total" style="color:var(--navy)">0</div><div class="clbl" data-i18n="total">Total</div></div>
-    <div class="cpill"><div class="cnum" id="c-hot" style="color:var(--hot)">0</div><div class="clbl">ð¥ Hot</div></div>
-    <div class="cpill"><div class="cnum" id="c-warm" style="color:var(--warm)">0</div><div class="clbl">âï¸ Warm</div></div>
-    <div class="cpill"><div class="cnum" id="c-cold" style="color:var(--cold)">0</div><div class="clbl">âï¸ Cold</div></div>
+    <div class="cpill"><div class="cnum" id="c-hot" style="color:var(--hot)">0</div><div class="clbl">🔥 Hot</div></div>
+    <div class="cpill"><div class="cnum" id="c-warm" style="color:var(--warm)">0</div><div class="clbl">☀️ Warm</div></div>
+    <div class="cpill"><div class="cnum" id="c-cold" style="color:var(--cold)">0</div><div class="clbl">❄️ Cold</div></div>
   </div>
 
-  <div id="voice-unsupported" class="voice-unsupported">â ï¸ Voice not available in this browser. Use Chrome or Safari. You can still type below.</div>
+  <div id="voice-unsupported" class="voice-unsupported">⚠️ Voice not available in this browser. Use Chrome or Safari. You can still type below.</div>
 
   <div class="card">
 
     <!-- Company + Contact -->
     <div class="company-wrap">
-      <input class="company-big" id="f-company" placeholder="Company nameâ¦" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input class="company-big" id="f-company" placeholder="Company name…" autocomplete="off" autocorrect="off" spellcheck="false">
       <div class="contact-mini-row">
         <input class="mini-inp" id="f-contact" placeholder="Contact name" autocomplete="off">
         <input class="mini-inp" id="f-title" placeholder="Title / Role" autocomplete="off">
@@ -290,10 +271,10 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 
     <!-- Temperature -->
     <div class="temp-row">
-      <button class="temp-btn" data-t="hot" onclick="setTemp(this)"><span class="emo">ð¥</span><span data-i18n="hot">Hot</span></button>
-      <button class="temp-btn" data-t="warm" onclick="setTemp(this)"><span class="emo">âï¸</span><span data-i18n="warm">Warm</span></button>
-      <button class="temp-btn" data-t="cold" onclick="setTemp(this)"><span class="emo">âï¸</span><span data-i18n="cold">Cold</span></button>
-      <button class="temp-btn" data-t="browse" onclick="setTemp(this)"><span class="emo">ð</span><span data-i18n="browse">Browse</span></button>
+      <button class="temp-btn" data-t="hot" onclick="setTemp(this)"><span class="emo">🔥</span><span data-i18n="hot">Hot</span></button>
+      <button class="temp-btn" data-t="warm" onclick="setTemp(this)"><span class="emo">☀️</span><span data-i18n="warm">Warm</span></button>
+      <button class="temp-btn" data-t="cold" onclick="setTemp(this)"><span class="emo">❄️</span><span data-i18n="cold">Cold</span></button>
+      <button class="temp-btn" data-t="browse" onclick="setTemp(this)"><span class="emo">👁</span><span data-i18n="browse">Browse</span></button>
     </div>
 
     <!-- Products -->
@@ -326,43 +307,43 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
       </div>
     </div>
 
-    <!-- ââ VOICE NOTE ââ -->
+    <!-- ── VOICE NOTE ── -->
     <div class="voice-sec">
       <div class="vtop">
-        <div class="vlabel">ð <span data-i18n="voice_note">Voice Note</span></div>
-        <span class="free-badge">Free â No API Key</span>
+        <div class="vlabel">🎙 <span data-i18n="voice_note">Voice Note</span></div>
+        <span class="free-badge">Free — No API Key</span>
       </div>
       <div class="vlang-row">
-        <button class="vchip active" data-lang="en-US" onclick="setVLang(this)">ðºð¸ EN</button>
-        <button class="vchip" data-lang="zh-CN" onclick="setVLang(this)">ð¨ð³ ä¸­æ</button>
-        <button class="vchip" data-lang="es-MX" onclick="setVLang(this)">ð²ð½ ES</button>
-        <button class="vchip" data-lang="de-DE" onclick="setVLang(this)">ð©ðª DE</button>
-        <button class="vchip" data-lang="fr-FR" onclick="setVLang(this)">ð«ð· FR</button>
-        <button class="vchip" data-lang="ja-JP" onclick="setVLang(this)">ð¯ðµ JA</button>
+        <button class="vchip active" data-lang="en-US" onclick="setVLang(this)">🇺🇸 EN</button>
+        <button class="vchip" data-lang="zh-CN" onclick="setVLang(this)">🇨🇳 中文</button>
+        <button class="vchip" data-lang="es-MX" onclick="setVLang(this)">🇲🇽 ES</button>
+        <button class="vchip" data-lang="de-DE" onclick="setVLang(this)">🇩🇪 DE</button>
+        <button class="vchip" data-lang="fr-FR" onclick="setVLang(this)">🇫🇷 FR</button>
+        <button class="vchip" data-lang="ja-JP" onclick="setVLang(this)">🇯🇵 JA</button>
       </div>
       <div class="mic-row">
-        <button class="mic-btn" id="mic-btn" onclick="toggleMic()">ð</button>
+        <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎙</button>
         <div class="mic-info">
           <div class="mic-status" id="mic-status" data-i18n="tap_mic">Tap mic to record</div>
           <div class="mic-hint" id="mic-hint">Transcript appears live as you speak</div>
         </div>
       </div>
-      <textarea class="transcript" id="transcript" rows="3" placeholder="Voice transcript appears here â or type directlyâ¦"></textarea>
+      <textarea class="transcript" id="transcript" rows="3" placeholder="Voice transcript appears here — or type directly…"></textarea>
       <div class="pchips">
-        <span class="pchip" onclick="pre('Competitor: ')">â¡ Competitor</span>
-        <span class="pchip" onclick="pre('Sample for: ')">ð§ª Sample</span>
-        <span class="pchip" onclick="pre('Price/MOQ. ')">ð° Price</span>
-        <span class="pchip" onclick="pre('Follow up: ')">ð Date</span>
-        <span class="pchip" onclick="pre('Pain point: ')">ð¯ Pain</span>
-        <span class="pchip" onclick="pre('Buying from: ')">ð Supplier</span>
-        <span class="pchip" onclick="pre('Volume: ')">ð¦ Volume</span>
-        <span class="pchip" onclick="pre('Decision maker: ')">ð¤ DM</span>
+        <span class="pchip" onclick="pre('Competitor: ')">⚡ Competitor</span>
+        <span class="pchip" onclick="pre('Sample for: ')">🧪 Sample</span>
+        <span class="pchip" onclick="pre('Price/MOQ. ')">💰 Price</span>
+        <span class="pchip" onclick="pre('Follow up: ')">📅 Date</span>
+        <span class="pchip" onclick="pre('Pain point: ')">🎯 Pain</span>
+        <span class="pchip" onclick="pre('Buying from: ')">🔄 Supplier</span>
+        <span class="pchip" onclick="pre('Volume: ')">📦 Volume</span>
+        <span class="pchip" onclick="pre('Decision maker: ')">👤 DM</span>
       </div>
       <div class="ai-row">
-        <button class="aibtn aibtn-sum" onclick="localSummarize()">â¨ <span data-i18n="summarize">Summarize</span></button>
-        <button class="aibtn aibtn-zh"  onclick="localTranslate('zh')">ð¨ð³ â ä¸­æ</button>
-        <button class="aibtn aibtn-en"  onclick="localTranslate('en')">ðºð¸ â EN</button>
-        <button class="aibtn aibtn-clr" onclick="clearVoice()">â</button>
+        <button class="aibtn aibtn-sum" onclick="localSummarize()">✨ <span data-i18n="summarize">Summarize</span></button>
+        <button class="aibtn aibtn-zh"  onclick="localTranslate('zh')">🇨🇳 → 中文</button>
+        <button class="aibtn aibtn-en"  onclick="localTranslate('en')">🇺🇸 → EN</button>
+        <button class="aibtn aibtn-clr" onclick="clearVoice()">✕</button>
       </div>
       <div class="ai-result" id="ai-result">
         <div class="ai-rlbl" id="ai-lbl"></div>
@@ -373,7 +354,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
     <!-- Questions they asked -->
     <div class="tags-sec">
       <div class="tlabel" data-i18n="their_questions">Questions they asked us</div>
-      <textarea class="finput" id="f-questions" rows="2" placeholder="Pricing, MOQ, lead time, certs, EV optionsâ¦" style="margin-top:0"></textarea>
+      <textarea class="finput" id="f-questions" rows="2" placeholder="Pricing, MOQ, lead time, certs, EV options…" style="margin-top:0"></textarea>
     </div>
 
     <!-- Materials given -->
@@ -407,109 +388,109 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
     <!-- Save -->
     <div class="save-wrap">
       <button class="save-btn" id="save-btn" onclick="saveVisit()">
-        <span id="save-txt" data-i18n="save_visit">ï¼ Save & Clear</span>
+        <span id="save-txt" data-i18n="save_visit">＋ Save & Clear</span>
       </button>
     </div>
   </div>
 </div>
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââ
+<!-- ══════════════════════════════════════════
      LOG
-ââââââââââââââââââââââââââââââââââââââââââ -->
+══════════════════════════════════════════ -->
 <div class="view" id="view-log">
   <div class="log-filters">
     <button class="fbtn active" onclick="setFilter('all',this)" data-i18n-btn="all">All</button>
-    <button class="fbtn" onclick="setFilter('hot',this)">ð¥ Hot</button>
-    <button class="fbtn" onclick="setFilter('warm',this)">âï¸ Warm</button>
-    <button class="fbtn" onclick="setFilter('cold',this)">âï¸ Cold</button>
-    <button class="fbtn" onclick="setFilter('browse',this)">ð Browse</button>
+    <button class="fbtn" onclick="setFilter('hot',this)">🔥 Hot</button>
+    <button class="fbtn" onclick="setFilter('warm',this)">☀️ Warm</button>
+    <button class="fbtn" onclick="setFilter('cold',this)">❄️ Cold</button>
+    <button class="fbtn" onclick="setFilter('browse',this)">👁 Browse</button>
   </div>
   <div id="log-list"></div>
 </div>
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââ
+<!-- ══════════════════════════════════════════
      RESOURCES
-ââââââââââââââââââââââââââââââââââââââââââ -->
+══════════════════════════════════════════ -->
 <div class="view" id="view-resources">
   <div class="slabel" data-i18n="jlt_ref">JLT Company Quick Reference</div>
 
-  <div class="res-item"><div class="res-ico">ð­</div><div>
+  <div class="res-item"><div class="res-ico">🏭</div><div>
     <div class="res-title">Manufacturing Locations</div>
-    <div class="res-desc">Huehuetoca, Mexico (main plant) Â· San Luis PotosÃ­, Mexico (new 2026, 3 Naciones Industrial) Â· Jiangyin, China</div>
+    <div class="res-desc">Huehuetoca, Mexico (main plant) · San Luis Potosí, Mexico (new 2026, 3 Naciones Industrial) · Jiangyin, China</div>
   </div></div>
-  <div class="res-item"><div class="res-ico">ð</div><div>
+  <div class="res-item"><div class="res-ico">🌐</div><div>
     <div class="res-title">Website & Contact</div>
-    <div class="res-desc">www.jltautomotive.com Â· info@jltautomotive.com</div>
+    <div class="res-desc">www.jltautomotive.com · info@jltautomotive.com</div>
   </div></div>
-  <div class="res-item"><div class="res-ico">ð</div><div>
+  <div class="res-item"><div class="res-ico">🚗</div><div>
     <div class="res-title">Core Products</div>
-    <div class="res-desc">EPDM & silicone sealing systems Â· Door / trunk / sunroof / glass run seals Â· NVH profiles Â· Custom extrusion Â· EV-optimized seals Â· Foam composites</div>
+    <div class="res-desc">EPDM & silicone sealing systems · Door / trunk / sunroof / glass run seals · NVH profiles · Custom extrusion · EV-optimized seals · Foam composites</div>
   </div></div>
-  <div class="res-item"><div class="res-ico">â</div><div>
+  <div class="res-item"><div class="res-ico">✅</div><div>
     <div class="res-title">Certifications</div>
-    <div class="res-desc">IATF 16949 Â· ISO 14001 Â· IMDS compliant Â· RoHS / REACH ready</div>
+    <div class="res-desc">IATF 16949 · ISO 14001 · IMDS compliant · RoHS / REACH ready</div>
   </div></div>
-  <div class="res-item"><div class="res-ico">â¡</div><div>
+  <div class="res-item"><div class="res-ico">⚡</div><div>
     <div class="res-title">EV / BEV Capability</div>
-    <div class="res-desc">Battery pack seals Â· Thermal management profiles Â· Low-NVH door seals Â· Lightweight foam composites</div>
+    <div class="res-desc">Battery pack seals · Thermal management profiles · Low-NVH door seals · Lightweight foam composites</div>
   </div></div>
 
   <div class="slabel" data-i18n="key_messages">Key Messages by Region</div>
   <div class="card">
-    <div class="card-hdr"><span class="card-hdr-title">ðºð¸ North America</span></div>
+    <div class="card-hdr"><span class="card-hdr-title">🇺🇸 North America</span></div>
     <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
-      Mexico nearshore manufacturing Â· USMCA compliant Â· San Luis PotosÃ­ new plant 2026 (BMW / GM supply chain proximity) Â· Fast delivery to US & Canada Â· IATF 16949
+      Mexico nearshore manufacturing · USMCA compliant · San Luis Potosí new plant 2026 (BMW / GM supply chain proximity) · Fast delivery to US & Canada · IATF 16949
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr"><span class="card-hdr-title">ðªðº Europe</span></div>
+    <div class="card-hdr"><span class="card-hdr-title">🇪🇺 Europe</span></div>
     <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
-      European OEM experience Â· IATF 16949 Â· Competitive China-origin pricing with Mexico local support Â· EV transition readiness Â· REACH compliant materials Â· Tooling &amp; sampling support
+      European OEM experience · IATF 16949 · Competitive China-origin pricing with Mexico local support · EV transition readiness · REACH compliant materials · Tooling &amp; sampling support
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr"><span class="card-hdr-title">ð¨ð³ China / Asia</span></div>
+    <div class="card-hdr"><span class="card-hdr-title">🇨🇳 China / Asia</span></div>
     <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
-      æ±é´çäº§åºå° Â· ä¸ºæ¬§ç¾æ´è½¦åç´ä¾å¯å°ä»¶ Â· å¢¨è¥¿å¥å·¥åæ¯åºå£å¹³å° Â· å¿«éææ ·ä¸å·¥è£äº¤ä» Â· IATF 16949è®¤è¯ Â· EVå¯å°è§£å³æ¹æ¡
+      江阴生产基地 · 为欧美整车厂直供密封件 · 墨西哥工厂是出口平台 · 快速打样与工装交付 · IATF 16949认证 · EV密封解决方案
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr"><span class="card-hdr-title">ð²ð½ Mexico</span></div>
+    <div class="card-hdr"><span class="card-hdr-title">🇲🇽 Mexico</span></div>
     <div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.7">
-      Planta principal en Huehuetoca Â· Nueva planta SLP 2026 junto a BMW y GM Â· USMCA Â· Entregas rÃ¡pidas a clientes en MÃ©xico y EE.UU. Â· IATF 16949
+      Planta principal en Huehuetoca · Nueva planta SLP 2026 junto a BMW y GM · USMCA · Entregas rápidas a clientes en México y EE.UU. · IATF 16949
     </div>
   </div>
 
   <div class="slabel">Common Q&amp;A</div>
   <div class="card"><div class="card-body" style="font-size:13px;line-height:1.85;color:var(--muted)">
-    <b style="color:var(--navy)">MOQ?</b> â Typically 500â1,000 linear meters for standard profiles. Custom tooling required for new cross-sections.<br><br>
-    <b style="color:var(--navy)">Lead time?</b> â Samples: 3â5 weeks. Production: 8â12 weeks after tooling approval.<br><br>
-    <b style="color:var(--navy)">Tooling cost?</b> â Amortized into unit price or charged separately depending on volume commitment.<br><br>
-    <b style="color:var(--navy)">IATF 16949?</b> â Yes, certified at both Mexico and China plants.<br><br>
-    <b style="color:var(--navy)">EV seals?</b> â Yes. Battery-grade silicone, thermal profiles, low-NVH door seals, lightweight foam composites all available.<br><br>
-    <b style="color:var(--navy)">Can you visit our factory?</b> â Yes, we welcome factory visits. Contact us to arrange.
+    <b style="color:var(--navy)">MOQ?</b> — Typically 500–1,000 linear meters for standard profiles. Custom tooling required for new cross-sections.<br><br>
+    <b style="color:var(--navy)">Lead time?</b> — Samples: 3–5 weeks. Production: 8–12 weeks after tooling approval.<br><br>
+    <b style="color:var(--navy)">Tooling cost?</b> — Amortized into unit price or charged separately depending on volume commitment.<br><br>
+    <b style="color:var(--navy)">IATF 16949?</b> — Yes, certified at both Mexico and China plants.<br><br>
+    <b style="color:var(--navy)">EV seals?</b> — Yes. Battery-grade silicone, thermal profiles, low-NVH door seals, lightweight foam composites all available.<br><br>
+    <b style="color:var(--navy)">Can you visit our factory?</b> — Yes, we welcome factory visits. Contact us to arrange.
   </div></div>
 
   <div class="slabel" data-i18n="your_notes">Your Notes</div>
   <div class="card"><div class="card-body">
-    <textarea class="finput" id="resource-notes" rows="4" placeholder="Add your own notes, links, product updatesâ¦" oninput="save()"></textarea>
+    <textarea class="finput" id="resource-notes" rows="4" placeholder="Add your own notes, links, product updates…" oninput="save()"></textarea>
   </div></div>
 
   <div class="slabel">WeCom / WeChat Work Sharing</div>
   <div class="card"><div class="card-body" style="font-size:13px;color:var(--muted);line-height:1.65">
-    <b style="color:var(--navy)">To share with colleagues on ä¼ä¸å¾®ä¿¡:</b><br>
+    <b style="color:var(--navy)">To share with colleagues on 企业微信:</b><br>
     1. Send this HTML file via WeCom file transfer<br>
-    2. Colleague opens in WeCom browser â works fully offline<br>
-    3. Or: tap <b>Generate Report</b> in Summary â Copy â paste into WeCom group
+    2. Colleague opens in WeCom browser — works fully offline<br>
+    3. Or: tap <b>Generate Report</b> in Summary → Copy → paste into WeCom group
   </div></div>
 </div>
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââ
+<!-- ══════════════════════════════════════════
      CHECKLIST
-ââââââââââââââââââââââââââââââââââââââââââ -->
+══════════════════════════════════════════ -->
 <div class="view" id="view-checklist">
   <div class="slabel" data-i18n="before">Before the Expo</div>
   <div id="chk-before"></div>
@@ -520,7 +501,7 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
   <div class="slabel" data-i18n="custom_tasks">Custom Tasks</div>
   <div class="card" style="padding:11px 13px">
     <div style="display:flex;gap:7px">
-      <input class="finput" id="custom-input" placeholder="Add a taskâ¦" style="margin:0;flex:1" onkeydown="if(event.key==='Enter')addTask()">
+      <input class="finput" id="custom-input" placeholder="Add a task…" style="margin:0;flex:1" onkeydown="if(event.key==='Enter')addTask()">
       <button class="save-btn" style="width:auto;padding:9px 14px;font-size:13px;border-radius:8px" onclick="addTask()">Add</button>
     </div>
     <div id="custom-tasks" style="margin-top:8px"></div>
@@ -528,37 +509,37 @@ body{min-height:100%;font-family:'DM Sans',sans-serif;color:var(--text);font-siz
 </div>
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââ
+<!-- ══════════════════════════════════════════
      SUMMARY
-ââââââââââââââââââââââââââââââââââââââââââ -->
+══════════════════════════════════════════ -->
 <div class="view" id="view-summary">
   <div class="slabel" data-i18n="stats">Stats</div>
   <div class="counter-strip">
     <div class="cpill"><div class="cnum" id="s-total" style="color:var(--navy)">0</div><div class="clbl" data-i18n="total">Total</div></div>
-    <div class="cpill"><div class="cnum" id="s-hot" style="color:var(--hot)">0</div><div class="clbl">ð¥ Hot</div></div>
-    <div class="cpill"><div class="cnum" id="s-warm" style="color:var(--warm)">0</div><div class="clbl">âï¸ Warm</div></div>
-    <div class="cpill"><div class="cnum" id="s-cold" style="color:var(--cold)">0</div><div class="clbl">âï¸ Cold</div></div>
+    <div class="cpill"><div class="cnum" id="s-hot" style="color:var(--hot)">0</div><div class="clbl">🔥 Hot</div></div>
+    <div class="cpill"><div class="cnum" id="s-warm" style="color:var(--warm)">0</div><div class="clbl">☀️ Warm</div></div>
+    <div class="cpill"><div class="cnum" id="s-cold" style="color:var(--cold)">0</div><div class="clbl">❄️ Cold</div></div>
   </div>
 
   <div class="slabel" data-i18n="priority_followup">Priority Follow-Up</div>
   <div id="priority-list"></div>
 
   <div class="slabel" data-i18n="export">Export Report</div>
-  <button class="btn btn-gold" onclick="genReport()">ð <span data-i18n="generate_report">Generate Text Report</span></button>
+  <button class="btn btn-gold" onclick="genReport()">📄 <span data-i18n="generate_report">Generate Text Report</span></button>
   <div id="export-box" class="export-box" style="display:none;margin-bottom:10px"></div>
-  <button class="btn" id="copy-btn" onclick="copyReport()" style="display:none">ð Copy to Clipboard</button>
-  <button class="btn btn-outline" style="margin-top:4px" onclick="if(confirm(T('confirm_clear')))clearAll()">ð <span data-i18n="clear_all">Clear All Data</span></button>
+  <button class="btn" id="copy-btn" onclick="copyReport()" style="display:none">📋 Copy to Clipboard</button>
+  <button class="btn btn-outline" style="margin-top:4px" onclick="if(confirm(T('confirm_clear')))clearAll()">🗑 <span data-i18n="clear_all">Clear All Data</span></button>
 </div>
 
 
 <!-- FAB -->
-<button class="fab" id="fab" onclick="go('capture')">â¡ <span data-i18n="capture">Capture</span></button>
+<button class="fab" id="fab" onclick="go('capture')">⚡ <span data-i18n="capture">Capture</span></button>
 
 
 <script>
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // STATE
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 let visits=[], checklist={}, customTasks=[], lang='en';
 let voiceLang='en-US', recognition=null, isRecording=false;
 let logFilter='all', exportTxt='';
@@ -584,63 +565,63 @@ function save(){
   updateCounters();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // I18N
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 const I18N={
   en:{tab_capture:'Capture',tab_log:'Log',tab_resources:'Resources',tab_checklist:'Checklist',tab_summary:'Summary',
     hot:'Hot',warm:'Warm',cold:'Cold',browse:'Browse',
     products_interest:'Products of Interest',region:'Region / Market',voice_note:'Voice Note',
     tap_mic:'Tap mic to record',their_questions:'Questions they asked us',materials_given:'Materials given to them',
-    next_step:'Next Step',save_visit:'ï¼ Save & Clear',total:'Total',stats:'Stats',
+    next_step:'Next Step',save_visit:'＋ Save & Clear',total:'Total',stats:'Stats',
     jlt_ref:'JLT Company Quick Reference',key_messages:'Key Messages by Region',your_notes:'Your Notes',
     before:'Before the Expo',during:'During the Expo',after:'After the Expo',custom_tasks:'Custom Tasks',
     priority_followup:'Priority Follow-Up',export:'Export Report',generate_report:'Generate Text Report',
     clear_all:'Clear All Data',capture:'Capture',summarize:'Summarize',
-    confirm_clear:'Clear all data?',no_visits:'No visits logged yet',no_visits_sub:'Tap â¡ Capture to log your first visit',saved:'Saved!'},
-  zh:{tab_capture:'è®°å½',tab_log:'æ¥å¿',tab_resources:'èµæ',tab_checklist:'æ¸å',tab_summary:'æ±æ»',
-    hot:'ç­é¨',warm:'æ¸©å',cold:'å·æ·¡',browse:'æµè§',
-    products_interest:'æå´è¶£äº§å',region:'å°åº / å¸åº',voice_note:'è¯­é³å¤æ³¨',
-    tap_mic:'ç¹å»å½é³',their_questions:'å¯¹æ¹æåºçé®é¢',materials_given:'å·²ç»å¯¹æ¹èµæ',
-    next_step:'ä¸ä¸æ­¥è¡å¨',save_visit:'ï¼ ä¿å­å¹¶æ¸ç©º',total:'åè®¡',stats:'æ°æ®ç»è®¡',
-    jlt_ref:'JLTå¬å¸åèèµæ',key_messages:'ååºåå³é®è¯æ¯',your_notes:'æ¨çå¤æ³¨',
-    before:'å±ååå¤',during:'å±ææ§è¡',after:'å±åè·è¿',custom_tasks:'èªå®ä¹ä»»å¡',
-    priority_followup:'ä¼åè·è¿å®¢æ·',export:'å¯¼åºæ¥å',generate_report:'çææå­æ¥å',
-    clear_all:'æ¸é¤æææ°æ®',capture:'å¿«éè®°å½',summarize:'å³é®æç¼',
-    confirm_clear:'ç¡®è®¤æ¸é¤æææ°æ®ï¼',no_visits:'ææ æè®¿è®°å½',no_visits_sub:'ç¹å»â¡å¿«éè®°å½æ°å¢æè®¿',saved:'å·²ä¿å­ï¼'},
+    confirm_clear:'Clear all data?',no_visits:'No visits logged yet',no_visits_sub:'Tap ⚡ Capture to log your first visit',saved:'Saved!'},
+  zh:{tab_capture:'记录',tab_log:'日志',tab_resources:'资料',tab_checklist:'清单',tab_summary:'汇总',
+    hot:'热门',warm:'温和',cold:'冷淡',browse:'浏览',
+    products_interest:'感兴趣产品',region:'地区 / 市场',voice_note:'语音备注',
+    tap_mic:'点击录音',their_questions:'对方提出的问题',materials_given:'已给对方资料',
+    next_step:'下一步行动',save_visit:'＋ 保存并清空',total:'合计',stats:'数据统计',
+    jlt_ref:'JLT公司参考资料',key_messages:'各区域关键话术',your_notes:'您的备注',
+    before:'展前准备',during:'展期执行',after:'展后跟进',custom_tasks:'自定义任务',
+    priority_followup:'优先跟进客户',export:'导出报告',generate_report:'生成文字报告',
+    clear_all:'清除所有数据',capture:'快速记录',summarize:'关键提炼',
+    confirm_clear:'确认清除所有数据？',no_visits:'暂无拜访记录',no_visits_sub:'点击⚡快速记录新增拜访',saved:'已保存！'},
   es:{tab_capture:'Registrar',tab_log:'Registro',tab_resources:'Recursos',tab_checklist:'Lista',tab_summary:'Resumen',
-    hot:'Caliente',warm:'Tibio',cold:'FrÃ­o',browse:'Explorar',
-    products_interest:'Productos de InterÃ©s',region:'RegiÃ³n / Mercado',voice_note:'Nota de Voz',
+    hot:'Caliente',warm:'Tibio',cold:'Frío',browse:'Explorar',
+    products_interest:'Productos de Interés',region:'Región / Mercado',voice_note:'Nota de Voz',
     tap_mic:'Toca para grabar',their_questions:'Sus preguntas',materials_given:'Material entregado',
-    next_step:'PrÃ³ximo paso',save_visit:'ï¼ Guardar y Limpiar',total:'Total',stats:'EstadÃ­sticas',
-    jlt_ref:'Referencia RÃ¡pida JLT',key_messages:'Mensajes Clave',your_notes:'Tus Notas',
-    before:'Antes del Expo',during:'Durante el Expo',after:'DespuÃ©s del Expo',custom_tasks:'Tareas Personalizadas',
+    next_step:'Próximo paso',save_visit:'＋ Guardar y Limpiar',total:'Total',stats:'Estadísticas',
+    jlt_ref:'Referencia Rápida JLT',key_messages:'Mensajes Clave',your_notes:'Tus Notas',
+    before:'Antes del Expo',during:'Durante el Expo',after:'Después del Expo',custom_tasks:'Tareas Personalizadas',
     priority_followup:'Seguimiento Prioritario',export:'Exportar Reporte',generate_report:'Generar Reporte',
     clear_all:'Borrar Todo',capture:'Registrar',summarize:'Resumir',
-    confirm_clear:'Â¿Borrar todos los datos?',no_visits:'Sin visitas registradas',no_visits_sub:'Toca â¡ Registrar para comenzar',saved:'Â¡Guardado!'},
+    confirm_clear:'¿Borrar todos los datos?',no_visits:'Sin visitas registradas',no_visits_sub:'Toca ⚡ Registrar para comenzar',saved:'¡Guardado!'},
   de:{tab_capture:'Erfassen',tab_log:'Log',tab_resources:'Material',tab_checklist:'Checkliste',tab_summary:'Auswertung',
-    hot:'HeiÃ',warm:'Warm',cold:'Kalt',browse:'Schauen',
+    hot:'Heiß',warm:'Warm',cold:'Kalt',browse:'Schauen',
     products_interest:'Interessierte Produkte',region:'Region / Markt',voice_note:'Sprachnotiz',
-    tap_mic:'Mikrofon starten',their_questions:'Ihre Fragen',materials_given:'AusgehÃ¤ndigtes Material',
-    next_step:'NÃ¤chster Schritt',save_visit:'ï¼ Speichern & Leeren',total:'Gesamt',stats:'Statistik',
+    tap_mic:'Mikrofon starten',their_questions:'Ihre Fragen',materials_given:'Ausgehändigtes Material',
+    next_step:'Nächster Schritt',save_visit:'＋ Speichern & Leeren',total:'Gesamt',stats:'Statistik',
     jlt_ref:'JLT Kurzreferenz',key_messages:'Kernbotschaften',your_notes:'Ihre Notizen',
-    before:'Vor der Messe',during:'WÃ¤hrend der Messe',after:'Nach der Messe',custom_tasks:'Eigene Aufgaben',
-    priority_followup:'PrioritÃ¤ts-Follow-Up',export:'Bericht Exportieren',generate_report:'Bericht Erstellen',
-    clear_all:'Alle Daten LÃ¶schen',capture:'Erfassen',summarize:'Zusammenfassen',
-    confirm_clear:'Alle Daten lÃ¶schen?',no_visits:'Keine Besuche erfasst',no_visits_sub:'Tippe â¡ Erfassen fÃ¼r den ersten Besuch',saved:'Gespeichert!'}
+    before:'Vor der Messe',during:'Während der Messe',after:'Nach der Messe',custom_tasks:'Eigene Aufgaben',
+    priority_followup:'Prioritäts-Follow-Up',export:'Bericht Exportieren',generate_report:'Bericht Erstellen',
+    clear_all:'Alle Daten Löschen',capture:'Erfassen',summarize:'Zusammenfassen',
+    confirm_clear:'Alle Daten löschen?',no_visits:'Keine Besuche erfasst',no_visits_sub:'Tippe ⚡ Erfassen für den ersten Besuch',saved:'Gespeichert!'}
 };
 function T(k){ return (I18N[lang]||I18N.en)[k]||k; }
 function setLang(l){
   lang=l; save();
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l||(l==='zh'&&b.textContent==='ä¸­æ')));
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l||(l==='zh'&&b.textContent==='中文')));
   document.querySelectorAll('[data-i18n]').forEach(el=>{ const v=T(el.dataset.i18n); if(v) el.textContent=v; });
   updateCounters();
   if(document.getElementById('view-checklist').classList.contains('active')) renderChecklist();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // NAVIGATION
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 function go(mode){
   ['capture','log','resources','checklist','summary'].forEach(m=>{
     document.getElementById('view-'+m).classList.toggle('active',m===mode);
@@ -653,16 +634,16 @@ function go(mode){
   if(mode==='capture') setTimeout(()=>document.getElementById('f-company').focus(),100);
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // VOICE
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 (function initSpeech(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){
     document.getElementById('voice-unsupported').style.display='block';
     const mb=document.getElementById('mic-btn');
     mb.style.opacity='.3'; mb.style.pointerEvents='none';
-    document.getElementById('mic-status').textContent='Voice not available â type below';
+    document.getElementById('mic-status').textContent='Voice not available — type below';
   }
 })();
 
@@ -676,43 +657,41 @@ function setVLang(btn){
 function toggleMic(){ isRecording?stopMic():startMic(); }
 function startMic(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  const status=document.getElementById('mic-status');
+  if(!SR) return;
+  recognition=new SR();
+  recognition.continuous=true; recognition.interimResults=true; recognition.lang=voiceLang;
   const ta=document.getElementById('transcript');
   const btn=document.getElementById('mic-btn');
-  if(!SR){
-    const ua=navigator.userAgent;
-    if(/micromessenger/i.test(ua)) status.textContent='WeChat blocks mic — open in Safari or Chrome.';
-    else if(/iphone|ipad/i.test(ua)) status.textContent='Open this page in Safari for voice.';
-    else status.textContent='Open in Chrome (Android) or Safari (iPhone) for voice.';
-    status.className='mic-status'; return;
-  }
-  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-    navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-      stream.getTracks().forEach(t=>t.stop());
-      _doRec(ta,btn,status);
-    }).catch(err=>{
-      if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError'){
-        status.textContent='Mic denied — Settings > Safari/Chrome > Microphone > Allow this site.';
-        status.className='mic-status';
-      } else { _doRec(ta,btn,status); }
-    });
-  } else { _doRec(ta,btn,status); }
-}
-function _doRec(ta,btn,status){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR(); recognition.continuous=true; recognition.interimResults=true; recognition.lang=voiceLang;
+  const status=document.getElementById('mic-status');
   let base=ta.value.trim();
-  recognition.onstart=()=>{isRecording=true;btn.classList.add('rec');btn.textContent='⏹';status.textContent='🔴 Recording… speak now';status.className='mic-status rec';document.getElementById('mic-hint').textContent='Tap ⏹ to stop';};
-  recognition.onresult=(e)=>{let interim='',nf='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)nf+=t;else interim+=t;}if(nf)base=(base+' '+nf).trim();ta.value=interim?base+' '+interim:base;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';};
-  recognition.onerror=(e)=>{const m={'not-allowed':'Mic blocked — Settings > Safari/Chrome > Mic > Allow.','no-speech':'No speech heard. Tap mic and try again.','network':'Network error. Retry.','audio-capture':'No microphone found.'};status.textContent=m[e.error]||'Error: '+e.error+'. Tap to retry.';status.className='mic-status';stopMic();};
-  recognition.onend=()=>{if(isRecording){try{recognition.start();}catch(err){stopMic();}}};
-  try{recognition.start();}catch(e){status.textContent='Could not start mic — tap to retry';status.className='mic-status';}
+  recognition.onstart=()=>{
+    isRecording=true; btn.classList.add('rec'); btn.textContent='⏹';
+    status.textContent='Recording…'; status.className='mic-status rec';
+    document.getElementById('mic-hint').textContent='Tap ⏹ to stop';
+  };
+  recognition.onresult=(e)=>{
+    let interim='',newFinal='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) newFinal+=t; else interim+=t;
+    }
+    if(newFinal) base=(base+' '+newFinal).trim();
+    ta.value=interim?base+' '+interim:base;
+    ta.style.height='auto'; ta.style.height=ta.scrollHeight+'px';
+  };
+  recognition.onerror=(e)=>{
+    document.getElementById('mic-status').textContent=e.error==='not-allowed'?'🚫 Mic blocked':'⚠️ '+e.error+' — retry';
+    document.getElementById('mic-status').className='mic-status';
+    stopMic();
+  };
+  recognition.onend=()=>{ if(isRecording){ try{recognition.start();}catch(err){stopMic();} } };
+  try{ recognition.start(); }catch(e){ document.getElementById('mic-status').textContent='Could not start'; }
 }
 function stopMic(){
   isRecording=false;
   if(recognition){ try{recognition.stop();}catch(e){} recognition=null; }
   const btn=document.getElementById('mic-btn');
-  btn.classList.remove('rec'); btn.textContent='ð';
+  btn.classList.remove('rec'); btn.textContent='🎙';
   document.getElementById('mic-status').textContent=T('tap_mic');
   document.getElementById('mic-status').className='mic-status';
   document.getElementById('mic-hint').textContent='Transcript is editable';
@@ -728,43 +707,43 @@ function clearVoice(){
   if(isRecording) stopMic();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // LOCAL SUMMARIZE
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 function localSummarize(){
   const text=document.getElementById('transcript').value.trim();
   if(!text){ alert('Record or type a voice note first.'); return; }
   const lines=[];
   const comp=text.match(/(?:competitor|currently using|buying from|working with|supplier is?)\s+([\w\s&]+?)(?:\.|,|$)/i);
-  if(comp) lines.push('â¢ Competitor / current supplier: '+comp[1].trim());
-  if(/\b(price|pricing|cost|moq|minimum|quantity|how much)\b/i.test(text)) lines.push('â¢ Asked about: pricing / MOQ');
+  if(comp) lines.push('• Competitor / current supplier: '+comp[1].trim());
+  if(/\b(price|pricing|cost|moq|minimum|quantity|how much)\b/i.test(text)) lines.push('• Asked about: pricing / MOQ');
   const smp=text.match(/(?:sample|prototype|trial)\s+(?:of|for)?\s*([\w\s]+?)(?:\.|,|$)/i);
-  if(smp) lines.push('â¢ Sample requested: '+smp[1].trim());
+  if(smp) lines.push('• Sample requested: '+smp[1].trim());
   const dt=text.match(/(?:by|before|end of|next|in)\s+(january|february|march|april|may|june|july|august|september|october|november|december|\d+\s*(?:week|month|day)s?|Q[1-4])/i);
-  if(dt) lines.push('â¢ Timeline: '+dt[0].trim());
+  if(dt) lines.push('• Timeline: '+dt[0].trim());
   const vol=text.match(/(\d[\d,]*\s*(?:k|thousand|million|units?|pieces?|pcs?|sets?|m\b)(?:\s*(?:per|\/)\s*(?:year|month|week))?)/i);
-  if(vol) lines.push('â¢ Volume: '+vol[1].trim());
-  if(/\b(iatf|iso|reach|rohs|cert|standard|compliance)\b/i.test(text)) lines.push('â¢ Certification topic raised');
-  if(/\b(ev|bev|electric|battery|electr)\b/i.test(text)) lines.push('â¢ EV / electric vehicle interest');
+  if(vol) lines.push('• Volume: '+vol[1].trim());
+  if(/\b(iatf|iso|reach|rohs|cert|standard|compliance)\b/i.test(text)) lines.push('• Certification topic raised');
+  if(/\b(ev|bev|electric|battery|electr)\b/i.test(text)) lines.push('• EV / electric vehicle interest');
   const dm=text.match(/(?:decision|approve|manager|director|vp|head of)\s+(?:is\s+)?([\w]+)/i);
-  if(dm) lines.push('â¢ Decision maker: '+dm[1]);
+  if(dm) lines.push('• Decision maker: '+dm[1]);
   const pain=text.match(/(?:problem|issue|challenge|pain|concern|need|looking for)\s+([\w\s]+?)(?:\.|,|but|and|$)/i);
-  if(pain) lines.push('â¢ Key need: '+pain[1].trim());
-  const result=lines.length?lines.join('\n'):'â¢ Note captured â review full transcript\nâ¢ No specific keywords auto-detected';
-  showAI('â¨ Key Points', result);
+  if(pain) lines.push('• Key need: '+pain[1].trim());
+  const result=lines.length?lines.join('\n'):'• Note captured — review full transcript\n• No specific keywords auto-detected';
+  showAI('✨ Key Points', result);
   document.getElementById('transcript').dataset.aiResult=result;
-  document.getElementById('transcript').dataset.aiLabel='â¨ Summary';
+  document.getElementById('transcript').dataset.aiLabel='✨ Summary';
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// FREE TRANSLATE (MyMemory API â no key)
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
+// FREE TRANSLATE (MyMemory API — no key)
+// ════════════════════════════════════════════════════
 async function localTranslate(to){
   const text=document.getElementById('transcript').value.trim();
   if(!text){ alert('Record or type something first.'); return; }
   if(text.length>500){ alert('Note too long for free translation (max ~500 chars). Summarize first.'); return; }
-  const label=to==='zh'?'ð¨ð³ â ä¸­æ':'ðºð¸ â English';
-  showAI(label,'<span class="spinner"></span> Translatingâ¦',true);
+  const label=to==='zh'?'🇨🇳 → 中文':'🇺🇸 → English';
+  showAI(label,'<span class="spinner"></span> Translating…',true);
   const src=voiceLang.split('-')[0];
   const tgt=to==='zh'?'zh':'en';
   try{
@@ -776,7 +755,7 @@ async function localTranslate(to){
     document.getElementById('transcript').dataset.aiResult=data.responseData.translatedText;
     document.getElementById('transcript').dataset.aiLabel=label;
   }catch(e){
-    showAI('â ï¸ Translation error','Could not reach translation service. Check internet connection.\n\nTip: Copy text and use Google Translate manually.');
+    showAI('⚠️ Translation error','Could not reach translation service. Check internet connection.\n\nTip: Copy text and use Google Translate manually.');
   }
 }
 function showAI(label,text,isHTML=false){
@@ -786,9 +765,9 @@ function showAI(label,text,isHTML=false){
   document.getElementById('ai-result').style.display='block';
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // FORM
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 let currentTemp='';
 function setTemp(btn){
   document.querySelectorAll('.temp-btn').forEach(b=>b.className='temp-btn');
@@ -826,7 +805,7 @@ function saveVisit(){
   });
   save();
   const btn=document.getElementById('save-btn'), txt=document.getElementById('save-txt');
-  btn.classList.add('ok'); txt.textContent='â '+T('saved')+' â '+company;
+  btn.classList.add('ok'); txt.textContent='✓ '+T('saved')+' — '+company;
   setTimeout(()=>{ btn.classList.remove('ok'); txt.textContent=T('save_visit'); },1800);
   clearForm();
   setTimeout(()=>document.getElementById('f-company').focus(),120);
@@ -842,9 +821,9 @@ function clearForm(){
   currentTemp='';
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // COUNTERS
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 function updateCounters(){
   const hot=visits.filter(v=>v.temp==='hot').length;
   const warm=visits.filter(v=>v.temp==='warm').length;
@@ -855,9 +834,9 @@ function updateCounters(){
   });
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // LOG
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 function setFilter(f,btn){
   logFilter=f;
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
@@ -867,21 +846,21 @@ function renderLog(){
   const el=document.getElementById('log-list');
   const list=logFilter==='all'?visits:visits.filter(v=>v.temp===logFilter);
   if(!list.length){
-    el.innerHTML=`<div class="empty"><div class="empty-ico">ð</div>
+    el.innerHTML=`<div class="empty"><div class="empty-ico">📋</div>
       <div class="empty-txt">${T(logFilter==='all'?'no_visits':'no_visits')}</div>
       <div class="empty-sub">${T(logFilter==='all'?'no_visits_sub':'no_visits_sub')}</div></div>`;
     return;
   }
   el.innerHTML=list.map(v=>{
-    const tl={hot:'ð¥ Hot',warm:'âï¸ Warm',cold:'âï¸ Cold',browse:'ð Browse'}[v.temp]||'';
+    const tl={hot:'🔥 Hot',warm:'☀️ Warm',cold:'❄️ Cold',browse:'👁 Browse'}[v.temp]||'';
     const prods=v.products.map(p=>`<span class="vtag vt-prod">${p}</span>`).join('');
     const regs=v.regions.map(r=>`<span class="vtag vt-reg">${r}</span>`).join('');
     const nexts=v.nextSteps.map(s=>`<span class="vtag vt-next">${s}</span>`).join('');
     const mats=v.materials.map(m=>`<span class="vtag vt-mat">${m}</span>`).join('');
-    const contact=[v.contact,v.title].filter(Boolean).join(' Â· ');
-    const contact2=[v.email,v.phone].filter(Boolean).join(' Â· ');
+    const contact=[v.contact,v.title].filter(Boolean).join(' · ');
+    const contact2=[v.email,v.phone].filter(Boolean).join(' · ');
     return `<div class="vcard" id="vc${v.id}">
-      <button class="vc-del" onclick="delVisit(${v.id})">Ã</button>
+      <button class="vc-del" onclick="delVisit(${v.id})">×</button>
       <div class="vc-top">
         <div><div class="vc-co">${v.company}</div>
         <div class="vc-ct">${contact}${contact2?'<br>'+contact2:''}</div></div>
@@ -891,12 +870,12 @@ function renderLog(){
         ${tl?`<span class="vtag vt-${v.temp}">${tl}</span>`:''}${prods}${regs}${nexts}${mats}
       </div>
       ${v.questions?`<div class="vc-note"><b>Q:</b> ${v.questions}</div>`:''}
-      ${v.note?`<div class="vc-note">ð ${v.note.replace(/\n/g,'<br>')}</div>`:''}
+      ${v.note?`<div class="vc-note">🎙 ${v.note.replace(/\n/g,'<br>')}</div>`:''}
       ${v.aiResult?`<div class="vc-ai"><div class="vc-ai-lbl">${v.aiLabel||'AI Note'}</div>${v.aiResult.replace(/\n/g,'<br>')}</div>`:''}
       <div class="vc-actions">
-        ${v.email?`<button class="vc-act" onclick="location='mailto:${v.email}'">âï¸</button>`:''}
-        ${v.phone?`<button class="vc-act" onclick="location='tel:${v.phone}'">ð</button>`:''}
-        <button class="vc-act primary" onclick="editNote(${v.id})">ð Note</button>
+        ${v.email?`<button class="vc-act" onclick="location='mailto:${v.email}'">✉️</button>`:''}
+        ${v.phone?`<button class="vc-act" onclick="location='tel:${v.phone}'">📞</button>`:''}
+        <button class="vc-act primary" onclick="editNote(${v.id})">📝 Note</button>
       </div>
     </div>`;
   }).join('');
@@ -912,9 +891,9 @@ function delVisit(id){
   visits=visits.filter(v=>v.id!==id); save(); renderLog();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // CHECKLIST
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 const CHECKLISTS={
   before:[
     'Print / charge business cards',
@@ -960,7 +939,7 @@ function renderChecklist(){
       const key=`${phase}_${i}`;
       const done=!!checklist[key];
       return `<div class="chk-item${done?' done':''}" onclick="toggleCheck('${key}',this)">
-        <div class="chk-circle">${done?'â':''}</div>
+        <div class="chk-circle">${done?'✓':''}</div>
         <div class="chk-text">${item}</div>
       </div>`;
     }).join('');
@@ -970,7 +949,7 @@ function renderChecklist(){
 function toggleCheck(key,el){
   checklist[key]=!checklist[key];
   el.classList.toggle('done');
-  el.querySelector('.chk-circle').textContent=checklist[key]?'â':'';
+  el.querySelector('.chk-circle').textContent=checklist[key]?'✓':'';
   save();
 }
 function addTask(){
@@ -984,18 +963,18 @@ function renderCustomTasks(){
   if(!el) return;
   el.innerHTML=customTasks.map(t=>`
     <div class="chk-item${t.done?' done':''}" onclick="toggleCustom(${t.id},this)" style="margin-bottom:6px">
-      <div class="chk-circle">${t.done?'â':''}</div>
+      <div class="chk-circle">${t.done?'✓':''}</div>
       <div class="chk-text">${t.text}</div>
     </div>`).join('');
 }
 function toggleCustom(id,el){
   const t=customTasks.find(x=>x.id===id);
-  if(t){ t.done=!t.done; el.classList.toggle('done'); el.querySelector('.chk-circle').textContent=t.done?'â':''; save(); }
+  if(t){ t.done=!t.done; el.classList.toggle('done'); el.querySelector('.chk-circle').textContent=t.done?'✓':''; save(); }
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // SUMMARY
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 function renderSummary(){
   updateCounters();
   const pl=document.getElementById('priority-list');
@@ -1005,14 +984,14 @@ function renderSummary(){
     const dot={hot:'#E65100',warm:'#F9A825',cold:'#1E88E5'}[v.temp]||'#90A4AE';
     const bg={hot:'#FFF3E0',warm:'#FFFDE7',cold:'#E3F2FD'}[v.temp]||'#F3F4F6';
     const col={hot:'#E65100',warm:'#F57F17',cold:'#1565C0'}[v.temp]||'#607D8B';
-    const tl={hot:'ð¥ Hot',warm:'âï¸ Warm',cold:'âï¸ Cold',browse:'ð Browse'}[v.temp]||'â';
-    const next=v.nextSteps.slice(0,2).join(', ')||'â';
-    const snippet=v.aiResult?`<div style="font-size:12px;color:#1E1B4B;background:#EDE9FE;border-radius:6px;padding:5px 8px;margin-top:4px;border:1px solid #DDD6FE">${v.aiResult.replace(/\n/g,' | ').slice(0,130)}${v.aiResult.length>130?'â¦':''}</div>`:'';
+    const tl={hot:'🔥 Hot',warm:'☀️ Warm',cold:'❄️ Cold',browse:'👁 Browse'}[v.temp]||'—';
+    const next=v.nextSteps.slice(0,2).join(', ')||'—';
+    const snippet=v.aiResult?`<div style="font-size:12px;color:#1E1B4B;background:#EDE9FE;border-radius:6px;padding:5px 8px;margin-top:4px;border:1px solid #DDD6FE">${v.aiResult.replace(/\n/g,' | ').slice(0,130)}${v.aiResult.length>130?'…':''}</div>`:'';
     return `<div class="priority-item">
       <div class="pdot" style="background:${dot}"></div>
       <div class="pinfo">
         <div class="pco">${v.company}</div>
-        <div class="psub">${[v.contact,v.title].filter(Boolean).join(', ')||'â'} Â· ${next}</div>
+        <div class="psub">${[v.contact,v.title].filter(Boolean).join(', ')||'—'} · ${next}</div>
         ${snippet}
       </div>
       <span class="pbadge" style="background:${bg};color:${col}">${tl}</span>
@@ -1023,17 +1002,17 @@ function renderSummary(){
 function genReport(){
   const expo=document.getElementById('expo-name').value||'Expo';
   const date=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  let t=`JLT Technology â Expo Visit Report\nEvent: ${expo}\nDate: ${date}\n${'â'.repeat(44)}\n\n`;
-  t+=`TOTALS: ${visits.length} visits | ð¥ ${visits.filter(v=>v.temp==='hot').length} hot | âï¸ ${visits.filter(v=>v.temp==='warm').length} warm | âï¸ ${visits.filter(v=>v.temp==='cold').length} cold\n\n`;
-  [{label:'ð¥ HOT LEADS',f:v=>v.temp==='hot'},{label:'âï¸ WARM LEADS',f:v=>v.temp==='warm'},{label:'âï¸ COLD / BROWSE',f:v=>v.temp==='cold'||v.temp==='browse'||!v.temp}].forEach(({label,f})=>{
+  let t=`JLT Technology — Expo Visit Report\nEvent: ${expo}\nDate: ${date}\n${'━'.repeat(44)}\n\n`;
+  t+=`TOTALS: ${visits.length} visits | 🔥 ${visits.filter(v=>v.temp==='hot').length} hot | ☀️ ${visits.filter(v=>v.temp==='warm').length} warm | ❄️ ${visits.filter(v=>v.temp==='cold').length} cold\n\n`;
+  [{label:'🔥 HOT LEADS',f:v=>v.temp==='hot'},{label:'☀️ WARM LEADS',f:v=>v.temp==='warm'},{label:'❄️ COLD / BROWSE',f:v=>v.temp==='cold'||v.temp==='browse'||!v.temp}].forEach(({label,f})=>{
     const g=visits.filter(f); if(!g.length) return;
-    t+=`${label}\n${'â'.repeat(30)}\n`;
+    t+=`${label}\n${'─'.repeat(30)}\n`;
     g.forEach(v=>{
-      t+=`\nâ¸ ${v.company}`;
+      t+=`\n▸ ${v.company}`;
       if(v.contact) t+=` | ${v.contact}`;
       if(v.title) t+=`, ${v.title}`;
-      if(v.email) t+=`\n  â ${v.email}`;
-      if(v.phone) t+=`  ð± ${v.phone}`;
+      if(v.email) t+=`\n  ✉ ${v.email}`;
+      if(v.phone) t+=`  📱 ${v.phone}`;
       if(v.products.length) t+=`\n  Products: ${v.products.join(', ')}`;
       if(v.regions.length) t+=`  |  Region: ${v.regions.join(', ')}`;
       if(v.nextSteps.length) t+=`\n  Next: ${v.nextSteps.join(', ')}`;
@@ -1055,8 +1034,8 @@ function copyReport(){
   if(!exportTxt) return;
   navigator.clipboard?.writeText(exportTxt).then(()=>{
     const btn=document.getElementById('copy-btn');
-    btn.innerHTML='â Copied!'; btn.style.background='#1B5E20';
-    setTimeout(()=>{ btn.innerHTML='ð Copy to Clipboard'; btn.style.background=''; },2000);
+    btn.innerHTML='✓ Copied!'; btn.style.background='#1B5E20';
+    setTimeout(()=>{ btn.innerHTML='📋 Copy to Clipboard'; btn.style.background=''; },2000);
   }).catch(()=>{ const ta=document.createElement('textarea');ta.value=exportTxt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Copied!'); });
 }
 
@@ -1067,14 +1046,14 @@ function clearAll(){
   document.getElementById('copy-btn').style.display='none';
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 // INIT
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ════════════════════════════════════════════════════
 load();
 updateCounters();
 // Apply language UI
 document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',
-  b.textContent===lang||(lang==='zh'&&b.textContent==='ä¸­æ')));
+  b.textContent===lang||(lang==='zh'&&b.textContent==='中文')));
 document.getElementById('expo-date').value = document.getElementById('expo-date').value ||
   new Date().toISOString().slice(0,10);
 renderChecklist();
